@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>自定义view(二) | Hexo</title>
+  <meta name="description" content="content{:toc}0x01   最近公司要求要出一个暂开内容，然后还能收缩内容的控件 其实一开始我想用ExpendListView，但是后面寻思着用了自定义View，毕竟现在自己也在学这一块  0x02 效果 0x03 代码一、SubExpendLayout代码 SubExpendLayout 这个是上面那个view，上面那个view实际上是叠加了一个textView，然后进行的，因为需">
+<meta name="keywords" content="android view">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义view(二)">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="content{:toc}0x01   最近公司要求要出一个暂开内容，然后还能收缩内容的控件 其实一开始我想用ExpendListView，但是后面寻思着用了自定义View，毕竟现在自己也在学这一块  0x02 效果 0x03 代码一、SubExpendLayout代码 SubExpendLayout 这个是上面那个view，上面那个view实际上是叠加了一个textView，然后进行的，因为需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;img&#x2F;view&#x2F;view2.gif">
+<meta property="og:image" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;img&#x2F;view&#x2F;view3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;img&#x2F;view&#x2F;view4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;img&#x2F;view&#x2F;view5.png">
+<meta property="og:updated_time" content="2019-11-14T00:14:26.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;img&#x2F;view&#x2F;view2.gif">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-06-23-自定义View2" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自定义view(二)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.458Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/android-view/" rel="tag">android view</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/" class="leancloud_visitors"  data-flag-title="自定义view(二)">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}<h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3></li>
+</ul>
+<blockquote>
+<p>最近公司要求要出一个暂开内容，然后还能收缩内容的控件</p>
+<p>其实一开始我想用ExpendListView，但是后面寻思着用了自定义View，毕竟现在自己也在学这一块</p>
+</blockquote>
+<h3 id="0x02-效果"><a href="#0x02-效果" class="headerlink" title="0x02 效果"></a>0x02 效果</h3><p><img src="/img/view/view2.gif" alt=""></p>
+<h3 id="0x03-代码"><a href="#0x03-代码" class="headerlink" title="0x03 代码"></a>0x03 代码</h3><h4 id="一、SubExpendLayout代码"><a href="#一、SubExpendLayout代码" class="headerlink" title="一、SubExpendLayout代码"></a>一、SubExpendLayout代码</h4><p> SubExpendLayout 这个是上面那个view，上面那个view实际上是叠加了一个textView，然后进行的，因为需要要求第一个textView收缩之后要点点，所以加上了singleLine =true</p>
+<p><img src="/img/view/view3.png" alt=""></p>
+<p>根据分析</p>
+<p><img src="/img/view/view4.png" alt=""></p>
+<p>对应的<code>expend()</code>和<code>close()</code>代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expend</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    tvContentClose.setVisibility(INVISIBLE); <span class="comment">//close的textview</span></span><br><span class="line">    ivExpend.setVisibility(INVISIBLE);<span class="comment">//close展开按钮图片</span></span><br><span class="line"></span><br><span class="line">    tvContentExpend.setVisibility(VISIBLE);<span class="comment">//展开的textview</span></span><br><span class="line">    ivClose.setVisibility(VISIBLE);<span class="comment">//关闭的按钮图片</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    tvContentClose.setVisibility(VISIBLE);</span><br><span class="line">    ivExpend.setVisibility(VISIBLE);</span><br><span class="line"></span><br><span class="line">    tvContentExpend.setVisibility(INVISIBLE);</span><br><span class="line">    ivClose.setVisibility(INVISIBLE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的测量代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"></span><br><span class="line">    measureChildren(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> widthSize = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">    <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> heightSize = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">    <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> width = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> height = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (widthMode) &#123;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.AT_MOST: &#123; <span class="comment">//宽度我这里实际默认了屏幕宽度</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">                View view = getChildAt(i);</span><br><span class="line">                <span class="keyword">int</span> measuredWidth = view.getMeasuredWidth();</span><br><span class="line">                width = Math.max(widthSize, measuredWidth);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: &#123;</span><br><span class="line">            width = widthSize;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (heightMode) &#123;</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">        <span class="keyword">case</span> MeasureSpec.AT_MOST: &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">                View view = getChildAt(i);</span><br><span class="line"></span><br><span class="line">                <span class="comment">//隐藏的就不进行测量了</span></span><br><span class="line">                <span class="keyword">if</span> (view.getVisibility() != GONE) &#123;</span><br><span class="line">                    <span class="keyword">int</span> measuredHeight = view.getMeasuredHeight();</span><br><span class="line">                    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123; <span class="comment">//第一个就照着第二个展开内容的摆放就好了,因为第一个内容和第二个的内容相同,但是是单行的,所以第二个的内容肯定比第一个打</span></span><br><span class="line">                        height += measuredHeight;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>: &#123;</span><br><span class="line">            height = heightSize;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Log.e(TAG, <span class="string">"onMeasure: "</span> + height);</span><br><span class="line">    setMeasuredDimension(width, height);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的onLayout的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tempHeight = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">        View view = getChildAt(i);</span><br><span class="line">        <span class="keyword">if</span> (view.getVisibility() == GONE) &#123;</span><br><span class="line">            <span class="comment">//隐藏的就下一个，就不在布局</span></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> measuredHeight = view.getMeasuredHeight();</span><br><span class="line">        view.layout(<span class="number">0</span>, tempHeight, view.getMeasuredWidth(), measuredHeight + tempHeight);</span><br><span class="line">        <span class="comment">//第二个和第一个重叠，所以不进行高度添加</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            tempHeight += measuredHeight;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//记录这个singleLine的textView</span></span><br><span class="line">            closeHeight = measuredHeight;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里应该执行动画的时候多次执行，所以只能得到第一次的值就是我们想要的</span></span><br><span class="line">    <span class="keyword">if</span> (expendHeight == <span class="number">0</span> || reLayout) &#123;</span><br><span class="line">        expendHeight = getMeasuredHeight();</span><br><span class="line"></span><br><span class="line">        midHeight = (closeHeight + expendHeight) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        reLayout = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后可以来一个触摸事件的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (event.getAction()) &#123;</span><br><span class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">            <span class="keyword">if</span> (isExpend) &#123;</span><br><span class="line">                closeLayout(); <span class="comment">//执行关闭动画</span></span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                expendLayout();<span class="comment">//执行展开动画</span></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expendLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ValueAnimator animator = ValueAnimator.ofInt(closeHeight, expendHeight);</span><br><span class="line">    animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> changeHeight = (<span class="keyword">int</span>) animation.getAnimatedValue();</span><br><span class="line">            LayoutParams layoutParams = getLayoutParams();</span><br><span class="line">            layoutParams.height = changeHeight;</span><br><span class="line">            setLayoutParams(layoutParams);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (changeHeight &gt;= midHeight) &#123;</span><br><span class="line">                expend();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animator.setDuration(<span class="number">500</span>);</span><br><span class="line">    animator.start();</span><br><span class="line"></span><br><span class="line">    isExpend = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">closeLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ValueAnimator animator = ValueAnimator.ofInt(expendHeight, closeHeight);</span><br><span class="line">    animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> changeHeight = (<span class="keyword">int</span>) animation.getAnimatedValue();</span><br><span class="line">            LayoutParams layoutParams = getLayoutParams();</span><br><span class="line">            layoutParams.height = changeHeight;</span><br><span class="line">            setLayoutParams(layoutParams);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (changeHeight &lt;= midHeight) &#123;</span><br><span class="line">                close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animator.setDuration(<span class="number">500</span>);</span><br><span class="line">    animator.start();</span><br><span class="line"></span><br><span class="line">    isExpend = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体的动画实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expendLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ValueAnimator animator = ValueAnimator.ofInt(closeHeight, expendHeight);</span><br><span class="line">    animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> changeHeight = (<span class="keyword">int</span>) animation.getAnimatedValue();</span><br><span class="line">            LayoutParams layoutParams = getLayoutParams();</span><br><span class="line">            layoutParams.height = changeHeight;</span><br><span class="line">            setLayoutParams(layoutParams);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (changeHeight &gt;= midHeight) &#123;</span><br><span class="line">                expend();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animator.setDuration(<span class="number">500</span>);</span><br><span class="line">    animator.start();</span><br><span class="line"></span><br><span class="line">    isExpend = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">closeLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ValueAnimator animator = ValueAnimator.ofInt(expendHeight, closeHeight);</span><br><span class="line">    animator.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> changeHeight = (<span class="keyword">int</span>) animation.getAnimatedValue();</span><br><span class="line">            LayoutParams layoutParams = getLayoutParams();</span><br><span class="line">            layoutParams.height = changeHeight;</span><br><span class="line">            setLayoutParams(layoutParams);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (changeHeight &lt;= midHeight) &#123;</span><br><span class="line">                close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    animator.setDuration(<span class="number">500</span>);</span><br><span class="line">    animator.start();</span><br><span class="line"></span><br><span class="line">    isExpend = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="二、RecordExpendLayout代码"><a href="#二、RecordExpendLayout代码" class="headerlink" title="二、RecordExpendLayout代码"></a>二、RecordExpendLayout代码</h4><p>分别设置了2个类，SubmissionExpendAdapter是个实现类</p>
+<p><img src="/img/view/view5.png" alt=""></p>
+<p>RecordExpendLayout的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RecordExpendLayout</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line"></span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">				<span class="comment">//设置了个背景</span></span><br><span class="line">        setBackgroundColor(getResources().getColor(R.color.background));</span><br><span class="line"></span><br><span class="line">				<span class="comment">//把点击关闭和开启状态的title提前加入了进来</span></span><br><span class="line">        View titleView = LayoutInflater.from(getContext()).inflate(R.layout.view_record_expend_title, <span class="keyword">this</span>, <span class="keyword">false</span>);</span><br><span class="line">        cardItemViews.add(titleView);</span><br><span class="line">        addView(titleView);</span><br><span class="line"></span><br><span class="line">        ivCtrolStatus = (ImageView) findViewById(R.id.iv_ctrol_status);</span><br><span class="line"></span><br><span class="line">        setStatus(Status.EXPEND);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>进行对应的测量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        measureChildren(widthMeasureSpec, heightMeasureSpec);</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">            View view = getChildAt(i);</span><br><span class="line">            measureChildWithMargins(view, widthMeasureSpec, <span class="number">0</span>, heightMeasureSpec, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> widthSize = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">        <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> heightSize = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> width = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> height = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (widthMode) &#123;</span><br><span class="line">            <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">            <span class="keyword">case</span> MeasureSpec.AT_MOST: &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">                    View view = getChildAt(i);</span><br><span class="line">                    <span class="keyword">int</span> measuredWidth = view.getMeasuredWidth();</span><br><span class="line">                    width = Math.max(widthSize, measuredWidth);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: &#123;</span><br><span class="line">                width = widthSize;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (heightMode) &#123;</span><br><span class="line">            <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">            <span class="keyword">case</span> MeasureSpec.AT_MOST: &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">                    View view = getChildAt(i);</span><br><span class="line"></span><br><span class="line">                    MarginLayoutParams lp = (MarginLayoutParams) view.getLayoutParams();</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//隐藏的就不进行测量了</span></span><br><span class="line">                    <span class="keyword">if</span> (view.getVisibility() != GONE) &#123;</span><br><span class="line">                        <span class="keyword">int</span> measuredHeight = view.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;</span><br><span class="line">                        height += measuredHeight;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>: &#123;</span><br><span class="line">                height = heightSize;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Log.e(TAG, <span class="string">"onMeasure: "</span> + height);</span><br><span class="line"><span class="comment">//        int currentHeight = ViewUtil.dp2px(getContext(), 20);</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (expendHeight == <span class="number">0</span> || reLayout) &#123;</span><br><span class="line">            expendHeight = getMeasuredHeight();</span><br><span class="line">        &#125;</span><br><span class="line">        setMeasuredDimension(width, height);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>进行onLayout</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> l, <span class="keyword">int</span> t, <span class="keyword">int</span> r, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tempHeight = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; getChildCount(); i++) &#123;</span><br><span class="line">        View view = getChildAt(i);</span><br><span class="line">        <span class="keyword">if</span> (view.getVisibility() == GONE) &#123;</span><br><span class="line">            <span class="comment">//隐藏的就下一个，就不在布局</span></span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> measuredHeight = view.getMeasuredHeight();</span><br><span class="line">        MarginLayoutParams lp = (MarginLayoutParams) view.getLayoutParams();</span><br><span class="line"></span><br><span class="line">        view.layout(lp.leftMargin, tempHeight + lp.topMargin, view.getMeasuredWidth() + lp.rightMargin, measuredHeight + tempHeight + lp.topMargin - lp.bottomMargin);</span><br><span class="line"></span><br><span class="line">        tempHeight += measuredHeight + lp.topMargin + lp.bottomMargin;</span><br><span class="line">        <span class="comment">//记录这个singleLine的textView</span></span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">            closeHeight = measuredHeight;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里应该执行动画的时候多次执行，所以只能得到第一次的值就是我们想要的</span></span><br><span class="line">    <span class="keyword">if</span> (expendHeight == <span class="number">0</span> || reLayout) &#123;</span><br><span class="line">        expendHeight = getMeasuredHeight();</span><br><span class="line"></span><br><span class="line">        midHeight = (closeHeight + expendHeight) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        reLayout = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    Log.e(TAG, <span class="string">"onLayout: expendHeight: "</span> + expendHeight + <span class="string">"  "</span> + getMeasuredHeight());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>剩下的就是ExpendAdapter 接口的设置了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ExpendAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 已经在内部添加，因为是已知 item</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> position</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> view</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parent</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getView</span><span class="params">(<span class="keyword">int</span> position, View view, RecordExpendLayout parent)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>RecordExpendLayout和adapter相关的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> LayoutParams <span class="title">generateLayoutParams</span><span class="params">(AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MarginLayoutParams(getContext(), attrs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> ExpendAdapter mAdapter;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAdapter</span><span class="params">(ExpendAdapter adapter)</span> </span>&#123;</span><br><span class="line">    mAdapter = adapter;</span><br><span class="line"></span><br><span class="line">    notifyAllData();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> itemCount = mAdapter.getItemCount();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; itemCount; i++) &#123;</span><br><span class="line">        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_record_expend_item, <span class="keyword">this</span>, <span class="keyword">false</span>);</span><br><span class="line">        cardItemViews.add(view);</span><br><span class="line">        addView(view);</span><br><span class="line"></span><br><span class="line">        mAdapter.getView(i, view, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyAllData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mAdapter != <span class="keyword">null</span>) &#123;</span><br><span class="line">        handleData();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Log.e(TAG, <span class="string">"notifyAllData: "</span>);</span><br><span class="line">    <span class="comment">//重新加入值，就重新测量一次</span></span><br><span class="line">    reLayout = <span class="keyword">true</span>;</span><br><span class="line">    requestLayout();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>以上就是上周觉得比较有意思而又比较重要的代码</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/" title="自定义view(二)" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-06-23-%E8%87%AA%E5%AE%9A%E4%B9%89View2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-06-26-exercise/" title="exercise"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-07-09-javaweb/" title="2019-07-09-javaweb"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

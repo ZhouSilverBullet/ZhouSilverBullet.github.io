@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>ffmpeg二 | Hexo</title>
+  <meta name="description" content="[TOC] FFMPEG常用命令要掌握一些规律 基本信息查询命令 录制命令 分解&#x2F;复用命令 处理原始数据命令 裁剪与合并命令 图片&#x2F;视频转换命令 直播相关的命令 各种滤镜命令 可以加logo滤镜，删除滤镜 ffmpeg处理流程， 输入文件 - demuxer - 编码数据包 - decoder - 解码后数据帧-encoder-编码数据包-muxer-输出文件 纲举目张 muxer， demuxe">
+<meta name="keywords" content="ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg二">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="[TOC] FFMPEG常用命令要掌握一些规律 基本信息查询命令 录制命令 分解&#x2F;复用命令 处理原始数据命令 裁剪与合并命令 图片&#x2F;视频转换命令 直播相关的命令 各种滤镜命令 可以加logo滤镜，删除滤镜 ffmpeg处理流程， 输入文件 - demuxer - 编码数据包 - decoder - 解码后数据帧-encoder-编码数据包-muxer-输出文件 纲举目张 muxer， demuxe">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T00:12:45.082Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-04-16-ffmpeg使用二" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ffmpeg二
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.456Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/ffmpeg/">ffmpeg</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/" class="leancloud_visitors"  data-flag-title="ffmpeg二">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.9k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h4 id="FFMPEG常用命令"><a href="#FFMPEG常用命令" class="headerlink" title="FFMPEG常用命令"></a>FFMPEG常用命令</h4><p>要掌握一些规律</p>
+<p>基本信息查询命令</p>
+<p>录制命令</p>
+<p>分解/复用命令</p>
+<p>处理原始数据命令</p>
+<p>裁剪与合并命令</p>
+<p>图片/视频转换命令</p>
+<p>直播相关的命令</p>
+<p>各种滤镜命令 可以加logo滤镜，删除滤镜</p>
+<p>ffmpeg处理流程，</p>
+<p>输入文件 - demuxer - 编码数据包 - decoder - 解码后数据帧-encoder-编码数据包-muxer-输出文件</p>
+<p>纲举目张</p>
+<p>muxer， demuxer封装，解封装。</p>
+<p>bsfs处理bit流</p>
+<p>pix_fmts  rgb </p>
+<p>帧内编码，帧间编码， 有损压缩，无损压缩</p>
+<p>formats</p>
+<p><strong>录制命令</strong></p>
+<ol>
+<li><p>ffmpeg录制屏幕:</p>
+<p>ffmpeg -f avfoundation -i 1-r 30 out.yuv<br>-f : avfoundation采集数据<br>-i: 指定从哪里采集数据，它是一个文件索引号 1是屏幕，0是摄像头</p>
+<p>-r：指定帧率</p>
+<p>ffplay  out.yuv  来输出</p>
+</li>
+</ol>
+<blockquote>
+<p>ffmpeg -f avfoundation -i 1 -r 30 out.yuv<br>通过-f确定用什么来采集数据  可以通过查看ffmpeg -devices可以确定</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D  avfoundation    AVFoundation input device</span><br><span class="line">D  lavfi Libavfilter virtual input device  </span><br><span class="line">   E sdl,sdl2    SDL2 output device</span><br></pre></td></tr></table></figure>
+
+<p>-i 确定在哪里采集数据  1是屏幕 ，0是摄像头<br>-r 指定帧率<br>out.yuv是输出的文件名</p>
+<p>ffplay -s 3360x2100 -pix_fmt uyvy422 out.yuv<br>通过ffplay来进行播放<br>-s 分辨率 activate frame-step mode<br>-pix_fmt 显示像素格式</p>
+</blockquote>
+<p>ffmpeg -f avfoundation -list_devices true -i “”   设备索引号通过这个命令查看</p>
+<p>查看当前选择的设备支持的类型，是语音呢还是什么</p>
+<blockquote>
+<p>ffmpeg -f avfoundation -i  :0   out.wav</p>
+<p>:0表示是音频设备<br>在 ： 前的是屏幕设备</p>
+</blockquote>
+<p>ffmpeg -f avfoundation -i  1:0   out.yuv  音频和视频同时录制</p>
+<p><strong>分解与复用</strong> ： 文件格式转换</p>
+<p>输入文件 - 分解 - 编码数据包  -  复用  -  输出文件</p>
+<p>ffmpeg - i out.mp4 -vcodec copy -acodec copy out.flv<br>-i ：输入文件<br>-vcodec :视频编码处理方式<br>-acodec：音频编码处理方式</p>
+<p>ffmpeg -i  zhou_v.mp4 -an -vcodec copy out.h264    //直接抽取视频</p>
+<p>ffmpeg -i  zhou_v.mp4 -acodec -vn out.aac   //抽取音频</p>
+<p><strong>处理原理数据命令</strong><br>原始数据：ffmpeg 解码的数据<br>视频 ：yuv 数据<br>音频：pcm 数据</p>
+<p>提取 <strong>yuv数据</strong><br>//原始视频编码 指定像素格式   4:2:0 (常用)  4:4:4  4:2:2</p>
+<p>ffmpeg -i input.mp4  -an  -c:v rawvideo -pix_fmt yuv420p out.yuv    // 视频的原始数据</p>
+<p><strong>提取pcm</strong>  48k 38k 16k    单声道还是多声道   -f抽取音频pcm的数据存储格式 s16le 符号的 16位表示<br>Ffmpeg -i out.mp4 -vn  -ar 44100 -ac 2 -f  s16le out.pcm   // 音频的原始数据<br>ar 采样率</p>
+<p>Ffplay -ar 44100 -ac 2  -f s16le out.pcm</p>
+<p>原始数据，就可以操作一些反转，等一些视频处理</p>
+<p>Ink 长刀 瘦金体</p>
+<p>滤镜命令：视频倍速，等等  所有滤镜处理，都是对解码后的数据帧做处理</p>
+<p>​    视频滤镜命令 -vf 滤镜类型是 原来的宽度-200，原来的高度 -200 crop = in_w-200:in_h-200</p>
+<p>Ffmpeg -i in.mov -vf crop = in_w-200:in_h-200 -c:v libx264 -c:a copy out.mp4</p>
+<p>crop格式 ： crop = out_w:out_h：x：y</p>
+<p>加水印 </p>
+<blockquote>
+<p>ffmpeg -i zhou_v.mp4 -vf “drawtext=fontfile=simhei.ttf: text=’技术’:x=10:y=10:fontsize=24:fontcolor=white:shadowy=2” output.mp4</p>
+</blockquote>
+<blockquote>
+<p>ffmpeg -i input.mp4 -i logo.png -filter_complex ‘overlay=main_w-overlay_w-10:main_h-overlay_h-10’ output.mp4</p>
+</blockquote>
+<p>裁剪和合并命令</p>
+<p>//从上面时间点开始裁剪    -t 是裁剪多次时间 以秒为单位</p>
+<p>ffmpeg -i in.mp4 -ss 00:00:00 -t 10 out.ts</p>
+<p>ffmpeg -f contact -i inputs.txt out.flv</p>
+<p>直播流</p>
+<p>推流<br>re和帧率同步</p>
+<p>ffmpeg -re -i out.mp4 -c copy -f flv  rtmp://server/live/streamName</p>
+<p>拉流</p>
+<p>ffmpeg -i rtmp://server/live/streamName -c copy dump.flv</p>
+<p>m3u8</p>
+<p>Njex推流</p>
+<h5 id="初级开发"><a href="#初级开发" class="headerlink" title="初级开发"></a>初级开发</h5><p>日志怎么进行打，怎么使用</p>
+<p>介绍ffmpeg的基本概念</p>
+<p>对复用/解复用及流操作的各种实战</p>
+<p> Ffmpeg 的代码结构</p>
+<p>libavcodec 提供了一些列的解码器</p>
+<p>libavformat 实现在流协议，容器格式及io基本访问</p>
+<p>libavfilter 提供了各种音视频过滤器  </p>
+<p>libavdevice 提供访问捕获设备和回访设备的接口</p>
+<p>libswresample 实现混音和重采样</p>
+<p>libswscale 实现色彩转换和缩放功能</p>
+<hr>
+<p><strong>ffmpeg日志系统</strong></p>
+<p>include&lt;libavutil/log.h&gt;</p>
+<p>av_log_set_level(AV_LOG_DEBUG)<br>av_log(NULL, AV_LOG_INFO, “… %s\n”, op)</p>
+<p>AV_LOG_ERROR   WARNING  LOG_INFO</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    av_log_set_level(AV_LOG_DEBUG);</span><br><span class="line">    av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"Hello world \n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行:</p>
+<blockquote>
+<p>clang -g -o ffmpeg_log ffmpeg_log.c -lavutil</p>
+</blockquote>
+<p>ffmpeg日志进行操作</p>
+<ul>
+<li><p>文件的删除与重命名</p>
+<p>avpriv_io_delete(“./mytestfile”)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">//是个url串，符合url串都可以认的</span></span><br><span class="line">    <span class="keyword">int</span> ret;</span><br><span class="line">    ret = avpriv_io_delete(<span class="string">"1.txt"</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"fail \n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p>  avpriv_io_move(“11.txt”, “222.txt”)</p>
+<p>  pkg-config - - libs  libavformat   能找到<code>系统</code>的 libavformat 的库的位置</p>
+<blockquote>
+<p>//不是单引号是 ````` 1前面的那个符号</p>
+<p>clang -g -o ffmpeg_del ffmpeg_f.c `pkg-config –libs libavformat`</p>
+</blockquote>
+<p>  vim学习</p>
+<p>  <strong>命令模式</strong><br>  拷贝、删除、粘贴等、通过i/a等间来进行切换到编辑模式</p>
+<p>  编辑模式</p>
+<p>  <strong>编辑文字</strong></p>
+<ul>
+<li><p>创建文件：vim filename</p>
+</li>
+<li><p>保存文件： :w</p>
+</li>
+<li><p>关闭文件：:q</p>
+<p>拷贝。粘贴、删除</p>
+<p>yy/yw</p>
+<p>p</p>
+<p>Dd/dw</p>
+<p>移动光标  h/j/k/l(这是小写的L)</p>
+<p>文件头gg<br>文件尾G</p>
+<p>移动到行首 ^</p>
+<p>移动到行尾$</p>
+<p>按单词移动：向前w  2w 3w<br>向后 b 2b 3b</p>
+<p>vim查找与替换：查找关键字： /关键字 命令模式下  n来进行向下查找 N向上查找</p>
+<p>查找与替换：:%s/关键字/替换字/gc    c 就是确定替换吗</p>
+<p>​    //关键字 可以写正则表达式<br>set number 来进行显示行号</p>
+</li>
+</ul>
+<p>  <strong>21,24s/关键字/替换字/gc  按照行号来进行替换</strong></p>
+<p>  分窗口：:split/ vsplit   横/竖   用close来关闭<br>  窗口间跳转： ww   w(hjkl)</p>
+<ul>
+<li><p>操作目录重要函数</p>
+<p>avio_open_dir()<br>avio_read_dir() 读取文件的信息<br>avio_close_dir() 释放资源<br>重要结构体<br>AVIODirContext 操作目录的上下文  目录的信息存在这里，read的时候<br>需要传这个 AVIODirContext进入<br>当关闭的时候也要传，知道关闭那个文件<br>AVIODirEntry：文件大小，文件信息<br><strong>实战：简单的ls命令</strong></p>
+<p>vim C语言环境</p>
+</li>
+<li><p>多媒体文件的基本概念（一）</p>
+<ul>
+<li>多媒体文件其实是个容器；可以放音频数据，字幕数据</li>
+<li>在容器里有很多流（stream/Track）；流 和 轨 ；  音频数据和视频数据，这个两条不会交叉</li>
+<li>每种流式有不同的编码器编码的 ； aac，mp3   h264 h265</li>
+<li>在一个包中包含着一个或者多个帧。包可能一帧压缩数据，多个包组成流，然后就多个多媒体文件</li>
+<li>几个重要结构体<ul>
+<li>AVFormatContext 多个多媒体文件的桥梁，可以区分哪个多媒体</li>
+<li>AVStream 可以读取流</li>
+<li>AVPacket 多个包，可以通过解码器，解会原来的的数据</li>
+</ul>
+</li>
+<li>解复用（打开容器） -&gt; 获取流-&gt; 数据包 （读取流中的数据包，可以存一个或多个压缩帧） -&gt; 释放相关的资源</li>
+</ul>
+</li>
+<li><p>打印音/视频信息</p>
+<p>视频帧数是多少等。</p>
+<p>av_register_all()</p>
+<p>avformat_open_input()/avformat_close_input   这个会根据文件的格式进行读取</p>
+<p>av_dump_format() //可以打印meta信息</p>
+</li>
+</ul>
+<p><strong>SPS/PPS 是干啥的</strong></p>
+<p><strong>帧与IDR帧的区别是啥？</strong></p>
+<p><strong>Opengles 的知识估计是来不及了</strong></p>
+<p>抽取音频数据：</p>
+<p>av_init_packet()  //初始化</p>
+<p>av_find_best_stream() //</p>
+<p>av_read_frame/av_packet_unref()</p>
+<p>fOpen(dst,”wb”);</p>
+<p>特征码</p>
+<p>//视频转图片</p>
+<p>ffmpeg -i in.flv -r 1 -f image2 image-3%d.jpeg</p>
+<p>//图片转视频</p>
+<p>ffmpeg -i image-3%d.jpeg out.mp4</p>
+<p>start Code</p>
+<p>Sps/pps 是干啥的， 普通文件有一个这个就好了，会产生新的 屏幕分辨率一样，</p>
+<p>改变分辨率的时候，都要把 sps和pps切换对应的</p>
+<p>codec -&gt; extradata , 在编码器的 extradata中获取</p>
+<p>In-&gt;data + in-&gt;size 的是移动</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/" title="ffmpeg二" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%BA%8C/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-04-16-ffmpeg%E4%BD%BF%E7%94%A8%E4%B8%80/" title="ffmpeg"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-04-18-classload%E7%83%AD%E4%BF%AE%E5%A4%8D/" title="classload 热修复"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>自定义View | Hexo</title>
+  <meta name="description" content="[TOC] View基础 getLeft(), getRight(),getTop(),getBottom(),是相对于父view的位置 view的左边距离父view左边的距离 view的右边距离父view左边的距离 view的顶部距离父view的顶部的距离 view的顶部距离父view的顶部的距离 点击事件的距离：    触摸点相对于其所在组件坐标系的坐标 event.getX()  view自">
+<meta name="keywords" content="android 自定义View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义View">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="[TOC] View基础 getLeft(), getRight(),getTop(),getBottom(),是相对于父view的位置 view的左边距离父view左边的距离 view的右边距离父view左边的距离 view的顶部距离父view的顶部的距离 view的顶部距离父view的顶部的距离 点击事件的距离：    触摸点相对于其所在组件坐标系的坐标 event.getX()  view自">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T00:13:28.305Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-05-06-自定义view" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自定义View
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.457Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/" class="leancloud_visitors"  data-flag-title="自定义View">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 14(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h3 id="View基础"><a href="#View基础" class="headerlink" title="View基础"></a>View基础</h3><ol>
+<li><p>getLeft(), getRight(),getTop(),getBottom(),是相对于父view的位置</p>
+<p>view的左边距离父view左边的距离</p>
+<p>view的右边距离父view左边的距离</p>
+<p>view的顶部距离父view的顶部的距离</p>
+<p>view的顶部距离父view的顶部的距离</p>
+<p>点击事件的距离：</p>
+</li>
+</ol>
+<blockquote>
+<p>触摸点相对于其所在组件坐标系的坐标</p>
+<p>event.getX()  view自己左边的距离</p>
+<p>event.getY()  view自己顶部的距离</p>
+</blockquote>
+<blockquote>
+<p>触摸点相对于屏幕默认坐标系的坐标</p>
+<p>event.getRawX()</p>
+<p>event.getRawY()</p>
+</blockquote>
+<p>   角度增大是逆时针，</p>
+<p>   颜色值：</p>
+   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> color1 = Color.argb(<span class="number">147</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">33</span>);</span><br><span class="line"><span class="keyword">int</span> color2 = Color.GRAY;</span><br><span class="line"><span class="keyword">int</span> color3 = <span class="number">0xffffddaa</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   先measure ，然后OnMeasure<br>   在unspacified 默认的 宽/高=默认大小 ，会去判断是否有背景大小</p>
+<p>   显示布局， 贝塞尔曲线</p>
+<p>   b(t) = p0 + t(p1 - p0) = (1-t)p0 + tp1 , 0&lt;=t&lt;=1;</p>
+<p>   一阶的没有控制点</p>
+<p>   所以三阶是2个控制点，三个点就可以确定了，控制点和结束点，贝塞尔曲线</p>
+<p>   <strong>paint 画线的话 用stroke</strong></p>
+<p>   for循环耗时 和 减少个for循环进行判断</p>
+<p>   onMeasure - 》 onSizeChange</p>
+<p>   Path , 贝塞尔曲线，canvas</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;mPath.reset(); //这个就相当于重新将画笔放到0，0</span><br><span class="line">&gt;mPath.lineTo(100, 100);</span><br><span class="line">&gt;//相当于 ，但是有一点区别，这个不会重置原来画的界面</span><br><span class="line">&gt;mPath.moveTo(0, 0);</span><br><span class="line">&gt;mPath.lineTo(100, 100);</span><br><span class="line">&gt;对称的时候，用宽度- 那边的位移就可以了</span><br><span class="line">&gt;后面发现中心点没有找对，所以出现了问题</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>   Kotlin：成员变量问题<br>   kotlin 没有了 三目运算 用 if else 来代替</p>
+<p>   转Int的时候 用 toInt() 来进行转换</p>
+<p>   Reified 告别class</p>
+<p>   lateinit var c：String<br>   val e: String by lazy {</p>
+<p>   ​    String()</p>
+<p>   }</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">kotlin 中成员变量应该一开始就确定，进行初始化</span><br><span class="line"></span><br><span class="line">get的修饰范围，随成员变量的属性走</span><br><span class="line">private var c = 1</span><br><span class="line">        private get() &#123;</span><br><span class="line">            return field;</span><br><span class="line">        &#125;</span><br><span class="line">        private set(value) &#123;</span><br><span class="line">            field = value</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">基本类型：</span><br><span class="line">	指定一个值就可以了</span><br><span class="line">	</span><br><span class="line">lateinit 不能作用在8的基本类型上</span><br><span class="line"></span><br><span class="line">roomList?size ?: 0 //当list是空是就返回0</span><br><span class="line"></span><br><span class="line">deiliget</span><br><span class="line"></span><br><span class="line">运算符：</span><br><span class="line">infix  中缀表达式 关键字 可以不用 DSL 里面使用， 代码可读性会降低</span><br><span class="line"></span><br><span class="line">kotlin</span><br><span class="line">jetbrains</span><br><span class="line"></span><br><span class="line">readLine</span><br><span class="line"></span><br><span class="line">文件操作</span><br><span class="line"></span><br><span class="line">if 还可以有返回值</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>注解就相当于打标签， <strong>注解的本质就是动态代理的实现</strong></p>
+<p>注解生成对象是proxy0吗</p>
+<p>运行时，可以获取属性或方法，进行修改或调取</p>
+<p>依赖注入，</p>
+<p>dagger2和butterknife有一定的区别</p>
+<p>什么是依赖？ 就是一种需要，需要这个对象； 人需要买房子。</p>
+<p>依赖倒置： 复习六大基本原则， 能用父类的地方用父类，如果有改变的时候，就要修改原来的源代码， 高层模块不应该有底层的依赖，，细节应该依赖抽象</p>
+<p>上层 控制下层，就是依赖倒置了。</p>
+<p>抽象约束行为，具体实现行为，</p>
+<p>面向抽象编程，面向接口编程， 依赖倒置</p>
+<p>控制反转。 person只要关系功能，不关心实现，</p>
+<p>依赖-）依赖倒置-》控制反转（父类的应用，传子类对象）</p>
+<p>构造方法注入：</p>
+<p>set方法注入：</p>
+<p>接口注入：</p>
+<p>设计模式：就是六大基本原则的体现</p>
+<p>工厂设计模式，</p>
+<p>Jsr-330 是java的依赖注入的标准</p>
+<p>a类型依赖b类型</p>
+<p><strong>运行时</strong>查找依赖的过程，称为“解析resolving”依赖</p>
+<p>如果没找到实例，称该依赖unsatisfied</p>
+<p>javax.inject 依赖注入</p>
+<p>@Inject 方法，构造器，方法或字段</p>
+<p>@Provider&lt;T&gt; 结构 Provider 用于类型T的实例</p>
+<p>@Qualifier，定义新注解的时候用到它</p>
+<p>@Named 基于String的限定器</p>
+<p>@Scope，作用域，某个线程有效，某个范围有效</p>
+<p>@Singleton， 注入器实例化一次类型，该注解不被继承</p>
+<p>依赖注入只能做到解耦性，</p>
+<p>程序员的最高境界，就是解耦  保证代码的健壮  灵活 可维护</p>
+<p>Dagger2  ： apt技术，生成一些辅助代码，<br>dagger2是dagger的升级版，是square公司出的第一版，然后dagger2是google工程师fork过去，然后重构了。</p>
+<p>dagger2单例的原理</p>
+<p>@Inject 标记要依赖的变量 2，标记构造函数，来为标记了@Inject的变量</p>
+<p>@Module：提供依赖第三方的，需要提供依赖的构造函数，是三方，提供第三方的依赖</p>
+<p>@Provides：  预先提供依赖的对象给标注了@Inject的变量赋值</p>
+<p>@Inject  只能标志一个构造方法，编译的时候会报错</p>
+<p>构造方法，也是可以的</p>
+<p>如果既有inject的也有module，优先使用module的</p>
+<p>提供两个一样类型的， 限定符</p>
+<p>module也使用限定符，来进行注解</p>
+<p>@Qualifier 可以当两个一样类型的时候，可以使用到</p>
+<p>@Named就是限定符的一种</p>
+<p>scope全局引擎</p>
+<p>同一个范围的，对象只会创建一次；使用了范围构造，就只会调用一次了，</p>
+<p>提供第三方</p>
+<p>注射器也要有个范围， doublecheck双重检测的方式来进行的</p>
+<p>mv vm</p>
+<p>mvp</p>
+<p>Scope  不能放在module 类上面 ，放在provides的方法上面</p>
+<p>@Inject 构造方法会生成对应的  factory 就是 类名_Factory</p>
+<p>@Inject 成员变量 就会生成 对应的注解器_MembersInjector</p>
+<p>@Module &amp;&amp; @Provides 注入第三放对象，会生成<br><strong>类名_方法名大写Factory</strong> 的这样的类</p>
+<p>具体当在对应的注入类中初始化的时候用到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//就是注入容器的Builder方法调用，初始化的时候调用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.getActivityProvider =</span><br><span class="line">        DoubleCheck.provider(ActivityModule_GetActivityFactory.create(builder.activityModule));</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>在scope下，让后就通过这些factory进行创建独一的对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//就是注入容器的Builder方法调用，初始化的时候调用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.getActivityProvider =</span><br><span class="line">        DoubleCheck.provider(ActivityModule_GetActivityFactory.create(builder.activityModule));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.homePresenterProvider =</span><br><span class="line">        HomePresenter_Factory.create(MembersInjectors.&lt;HomePresenter&gt;noOp());</span><br><span class="line">        ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>``这个符号是强行将不合法的改为合法的</p>
+<p>在Kotlin中可以用反引号解决关键字冲突的问题，可以强行将一个不合法的字符变为合法。</p>
+<p>cookie</p>
+<p><strong>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话</strong>。</p>
+<p><a href="https://www.cnblogs.com/zhujiabin/p/6207913.html" target="_blank" rel="noopener">Android 使用Okhttp/Retrofit持久化cookie的简便方式</a></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> e: ApiException? = <span class="literal">null</span></span><br><span class="line">局部变量声明</span><br><span class="line"><span class="meta">@JvmOverloads</span> <span class="comment">//重载的标志</span></span><br><span class="line">getRetrofit(baseUrl: String, provider: NetProvider? = <span class="literal">null</span>)</span><br><span class="line">两个参数的方法竟然可以传一个值</span><br></pre></td></tr></table></figure>
+
+<p>okhttp3 interceptor 原理</p>
+<p>Okhttp3 https标准的访问</p>
+<p>Okhttp3 websocket</p>
+<p>java网络这一块</p>
+<p><a href="https://www.cnblogs.com/fysola/p/6088893.html" target="_blank" rel="noopener">JAVA基础知识之网络编程——-使用MutilcastSocket实现多点广播</a></p>
+<p>应用层，  传输层， 网络层，网络接口层</p>
+<p>Tcp端对端的传输</p>
+<p>应用层，表示层，会话层</p>
+<p>Seq =0<br>Seq=0 ack = 1<br>Seq =1 ack=1</p>
+<p>HTTP 的3次握手是准备资源的过程；HTTP 的4次握手是释放资源的过程</p>
+<p>Tcp 三次握手：tcp目的是为了通讯 ，客户端和服务端都要确保，能读能写</p>
+<p>断开，也可以服务器断开，也可以客户端断开</p>
+<p>fin + 1    ack</p>
+<p>服务端还有数据没发完，当发完的时候，然后 在发送 服务器端的 fin 数据，所以分两次</p>
+<p>http2.0 2015出现的</p>
+<p>socket去请求，可以保持这次socket，可以下次拿来使用，如果是connecttion：keep-alive   就是可以进行长连接，通信</p>
+<p>spdy google提出来的 okhttp也实现了这个，被http2.0代替了</p>
+<p>http2.0，和http.1x想是一个全新的一个协议了。1.x的时代是字符串通信。2.0是二进制通信了</p>
+<p>\r\n</p>
+<p>读取449行，然后就成功响应了</p>
+<p>builder，okhttp有责任链模式<br>接口设计是否合理</p>
+<p>http有一种<code>keepalive connections</code>的机制，可以在传输后仍然保持连接，当客户端需要再次获取数据时，直接使用刚刚空闲下来的连接而不需要再次握手</p>
+<p>责任链设计模式</p>
+<p>1、开闭原则 对扩展开放，对修改关闭 多使用抽象类和接口<br>2、里氏代换原则 基类可以被子类替换 使用抽象类继承，不使用具体类继承<br><del>3、合成复用原则 要依赖于抽象，不依赖于具体 要针对接口编程，不根据实现编程</del><br>4、接口隔离原则 使用多个隔离的接口，比使用单个接口好 建立最小的接口<br>5、迪米特法原则 一个软件实体应尽可能少地与另一个实体发生相互作用 通过中间类建立联系<br>6、依赖倒转原则 尽量使用合成/聚合，而不是使用继承 尽量使用合成/聚合，而不是使用继承</p>
+<p>单一职责：一个类就干一个事情<br>里氏替换：能用到父类的地方就用父类（这个指抽象类）<br>依赖倒置：能用接口的地方就用接口（这个指接口）<br>开闭原则：对修改关闭，对扩展开放<br>接口隔离：尽量把接口拆分成多个接口，让接口不那么的臃肿<br>迪米特（也叫 最小知识）：一个实体尽可能少的更另一个实体接触</p>
+<p>单一职责和接口隔离，感觉是有点像，但是接口隔离注重接口；单一职责重点值 职责单一<br>里氏替换和依赖倒置：也差不多，只不过一个是指抽象类，一个指的是接口</p>
+<p>序列化</p>
+<hr>
+<p>如果传输用serializable<br>进程之间的通信，传输数据：</p>
+<p>AIDL，contentProvide</p>
+<p>远程 <strong>rpc</strong> 也可以数据通信</p>
+<p>内核内存共享</p>
+<p><strong>xml json protobuf 都是序列化的一个手段，不能叫序列化吧</strong><br>序列化：将对象或数据结构转换成<strong>二进制</strong>的过程</p>
+<p>反序列化，</p>
+<p>谷歌出的序列化方案，可以压缩32位数据，<br>很多im传输用protobuf来实现的</p>
+<p><strong>为什么activity之间是同一个进程为什么还要序列化？？</strong></p>
+<p>ams是跨进程的。</p>
+<p>序列化只对变量进行序列化，针对于对象，不针对<strong>方法</strong>进行序列化</p>
+<p>序列化协议：</p>
+<ol>
+<li>技术层面：是否要跨平台，跨语言，通用性问题</li>
+<li>流行程度：</li>
+</ol>
+<p>健壮性：xml json protobuf</p>
+<p>成熟度不够</p>
+<p>性能：</p>
+<p>空间和时间方面：</p>
+<p>空间开销：</p>
+<p>时间开销：复杂的序列化协议会导致较长的解析时间，这可能会使用序列化和反序列化阶段成为整个系统的瓶颈，</p>
+<p>可扩展性/兼容性</p>
+<p>安全性/访问限制</p>
+<p>Protocol buffers  19000 -19999 不能使用，是保留字段</p>
+<p>32，这里是4个字节原因，会压缩32位</p>
+<p>压缩算法在里面，压缩算法32位</p>
+<p>proto的目录<br>Base-128 整形可变长编码</p>
+<p>rpc 调试 rpc效率优先</p>
+<p>protobuf 32位的可以压缩合成一个，几十倍的压缩率，</p>
+<p><strong>transient 修饰的不需要进行序列化。静态变量不会进行序列化。</strong><br>需要一个无参的构造方法</p>
+<p>不加入 serialVersionUID ，不好兼容了，如果修改信息了，然后就会又根据类进行反序列化成新的 serialVersionUID了，兼容性可能不好</p>
+<p>Externalable 也是实现Seralzible接口，只不过要手动实现里面的方法</p>
+<p>.java的文件，jvm，怎么知道是java文件， 也有个魔术，<strong>文件头，对象头</strong></p>
+<p>objectStream里面，会进行反射 writeObject  <strong>可以用于特殊需求</strong></p>
+<p>arrayList 中有 wirteObject实现了，但是elmentData进行了序列化，因为elmentData，<strong>大部分会为空，所以为空的就不进行序列化，只对有效数据序列化</strong>，这是jdk序列化的优化。</p>
+<p><strong>序列化的坑</strong>：</p>
+<ol>
+<li><p>同一个引用只会写一次，要做一些处理</p>
+<p>oos.wirteUnshare ,或者重置流</p>
+</li>
+<li><p>子类实现了序列化，父类实现 serializable</p>
+</li>
+<li><p>类的演化，反序列化的时候不会报错，但是会没有值</p>
+</li>
+<li><p><strong>枚举类型</strong></p>
+</li>
+<li><p>序列化单例对象：打单机游戏什么的可能有需求要存单例对象。</p>
+</li>
+</ol>
+<p>serializable，很多反射，会产生很多中间变量，导致大量的内存碎片，</p>
+<p>parcel  parcelable，就是打包的意思</p>
+<p>parcelable，只是存在内存中，内存中序列化的方案，<strong>硬是要写硬盘也可以</strong></p>
+<p>parcelable 性能方面</p>
+<p>存文件用serializable， 只是跨进程用parcelable</p>
+<p>SQLite与SP</p>
+<p>binder，的缓冲区是有限制的，一般默认一个进程只有16个binder，</p>
+<p>xml：是基于树形结构</p>
+<p>操作频繁，文档较小，动态添加，删除节点用DOM解析</p>
+<p>js解析html就是dom解析</p>
+<p>知识储备</p>
+<p>版本问题，</p>
+<p>移动端不怎么相关的但是是互联网端的：负载均衡</p>
+<p>Keepalives -&gt; okhttp复用池</p>
+<p>找姐夫说一下，自己公司现在是个什么状态，听听他的意见，不一定要全听，但是要去提取有用的条件</p>
+<p>依赖倒置-》  在构造方法里面直接用</p>
+<p>父类的引用 = 子类对象</p>
+<p>控制反转-》构造函数或者方法用父类的引用，外面传子类的对象，相当于内部的对象，有外部提供了，不在是自己亲自创建了</p>
+<p>毒瘤应用-进程保活</p>
+<h5 id="json"><a href="#json" class="headerlink" title="json"></a>json</h5><p>writeObject 和 readObject 原理， 时序图很重要</p>
+<p>json的网络请求</p>
+<p>json是来传输的</p>
+<p>json小于100m，数据多的时候用 protobuf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSONObject //基于文档驱动的，会全部加载到内存中</span><br></pre></td></tr></table></figure>
+
+<p>retrofit有默认解析吗？默认是gson解析吗？</p>
+<p>文档驱动：就是一次性把文档加入进去</p>
+<p>gson基于事件的启动方式， <strong>gson，什么时候有隐藏bug了，忘记听了</strong></p>
+<p>jackson解析也是基于事件驱动， jackson效率比gson高，配置一下也可以不用一一对应可以进行正常解析</p>
+<p>FastJson：有隐藏的bug</p>
+<p>切片 ， 按照 “\n\t\br” 来进行切片</p>
+<p>算法匹配，<br>词法分析 “{” “}” 这种符号，是词法分析<br>然后再语法分析<br>jsonDe</p>
+<p>getFields()：获得某个类的所有的公共（public）的字段，包括父类中的字段。 </p>
+<p>getDeclaredFields()：获得某个类的所有声明的字段，即包括public、private和proteced，但是不包括父类的申明字段。</p>
+<p>具体编码如下：</p>
+<p>ArrayList 增删，效率都不高，因为伴随的System.arraycopy这个操作符很低</p>
+<p>Kotlin 中 实现 接口 ，没带括号，而抽象类，需要个括号</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLogiMouse</span></span>(mouseName: String, <span class="keyword">override</span> <span class="keyword">var</span> j: <span class="built_in">Int</span>) : LogiMouse(mouseName), USBInputDevice</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Abstract 类默认是 open的，如果不是抽象类，需要添加open才能被继承</p>
+<p>如果方法需要被复写，如果不是abstract的，就需要被添加open</p>
+<p>kotlin中属性也能进行复写</p>
+<p>接口代码  by  接口代理</p>
+<p>当名字相同的时候。</p>
+<p>internal 模块内可见</p>
+<p>object 就是单例的</p>
+<p>伴生对象和静态方法</p>
+<p>@JvmStatic 这样java就可以正常的静态方法调用了</p>
+<p>@JvmOverloads这个重载方法</p>
+<p>jvm函数签名，默认参数和方法重载可以相互转换</p>
+<p>在java中看到默认参数相当于重载，</p>
+<p>反例就是  remove(Object o) ， remove(int i)</p>
+<p>字符串很多方法</p>
+<p><strong>扩展成员</strong>：二次加工 </p>
+<p>加了个 什么点  </p>
+<p>fun String.multiply() {}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set(value)&#123;</span><br><span class="line">    field = value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>lazy 前面的变量名字实际就是个傀儡</p>
+<p>kotlin 的锁， 怎么数据源排序</p>
+<p>（）== data class 就是 componentN的调用</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/" title="自定义View" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-05-06-%E8%87%AA%E5%AE%9A%E4%B9%89view/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-05-02-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%932/" title="4月份的总结2"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-05-14-file_stream%E6%93%8D%E4%BD%9C/" title="file和stream"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

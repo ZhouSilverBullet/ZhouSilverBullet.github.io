@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>jvm原理 | Hexo</title>
+  <meta name="description" content="[TOC] java虚拟机以太坊，区块链1.0版本 比特币是1.0  以太坊2.0 -EVM jvm就是对字节码的翻译 虚拟机的发展  go语言写jvm非常的简单  hotSpot VM 目前最广的java虚拟机 JRockit VM 号称最快的java虚拟机 J9 VM  ibm公司的 Dalvik VM   未来java技术  模块化， GFGI 模块化，微服务 混合语言（java，Scala">
+<meta name="keywords" content="android java jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm原理">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-04-14-jvm2&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="[TOC] java虚拟机以太坊，区块链1.0版本 比特币是1.0  以太坊2.0 -EVM jvm就是对字节码的翻译 虚拟机的发展  go语言写jvm非常的简单  hotSpot VM 目前最广的java虚拟机 JRockit VM 号称最快的java虚拟机 J9 VM  ibm公司的 Dalvik VM   未来java技术  模块化， GFGI 模块化，微服务 混合语言（java，Scala">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T00:12:30.221Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-04-14-jvm2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-04-14-jvm2" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jvm原理
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-04-14-jvm2/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.456Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/JVM/">JVM</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-04-14-jvm2/" class="leancloud_visitors"  data-flag-title="jvm原理">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-04-14-jvm2/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h4 id="java虚拟机"><a href="#java虚拟机" class="headerlink" title="java虚拟机"></a>java虚拟机</h4><p>以太坊，区块链1.0版本 比特币是1.0  以太坊2.0 -EVM</p>
+<p>jvm就是对字节码的翻译</p>
+<p><strong>虚拟机的发展</strong>  go语言写jvm非常的简单</p>
+<blockquote>
+<p>hotSpot VM<br> 目前最广的java虚拟机</p>
+<p>JRockit VM<br> 号称最快的java虚拟机</p>
+<p>J9 VM  ibm公司的</p>
+<p>Dalvik VM </p>
+</blockquote>
+<p><strong>未来java技术</strong></p>
+<blockquote>
+<p>模块化， GFGI 模块化，微服务</p>
+<p>混合语言（java，Scala） </p>
+<p>多核并行（函数式编程） </p>
+<p> 丰富语法   </p>
+<p> 64位 </p>
+<p> 更强的垃圾回收 回收gb级的 jdk11可以是tb级别</p>
+</blockquote>
+<p>所有的东西都是放内存的  内存的划分，</p>
+<p><strong>程序计数器</strong>：指向当前线程的字节码，线程间切换来切换去<br>FILO  first in last out</p>
+<p>非常符合java间的方法调用</p>
+<p>虚拟机栈 -Xss 里面有栈帧<br>javap</p>
+<p><strong>局部变量表</strong>，只能放32位的数据，局部变量表， this，money</p>
+<p>​    持有引用，</p>
+<p><strong>操作数栈</strong> ，<br>出栈进行相减<br>count++， dup - idd 总共4不<br>操作的入栈，</p>
+<p><strong>返回地址</strong>return，正常执行</p>
+<p>异常会在一个叫 异常处理器表 处理</p>
+<p>多态的的话，就要使用<strong>动态连接</strong>， java动态运行性，</p>
+<p>局部变量表一个引用</p>
+<p>​    native栈 hotspot吧本地方法栈和虚拟机栈合二为一的</p>
+<p>​    加了入参，可能有点影响</p>
+<p>​    </p>
+<p>为什么jvm要用栈，因为：非常符合java间的方法调用</p>
+<p>指令 + 数据， </p>
+<p>虚拟机栈帧，<strong>默认是1m</strong>， 可以进行修改</p>
+<p><strong>方法区</strong>： 类信息，常量，静态变量，即时编译器编译后的代码</p>
+<p>java堆： <strong>对象的实例（几乎所有）</strong>    <strong>数组</strong></p>
+<p>​    -xmx 最大<br>​    -xms 最小</p>
+<p>直接内存： nio会使用</p>
+<p>​    不超过，内存调用<br>​    每个线程归属于单个线程，栈</p>
+<p>堆内存是对所有线程可见的</p>
+<p>空间大小：并发可以跑一个100个线程，就100m</p>
+<p>java虚拟机中的对象</p>
+<p>分配内存</p>
+<blockquote>
+<p>指针碰撞 和 空闲列表<br>规整用指针碰撞，不规整用空闲列表</p>
+<p>如果相同地址时：要使用cas锁</p>
+<p>cas锁：比较和交换  乐观锁</p>
+<p>cas操作带来的ABA</p>
+<p>ABA 问题   中间状态，被用了，不管， 只要管再次分配的时候 b这个状态不管</p>
+</blockquote>
+<p>char的初始值  \u0000 ？？？</p>
+<p>对象初始化、</p>
+<p>设置是那些类的， 然后对象初始化</p>
+<p><strong>对象内存的布局</strong></p>
+<blockquote>
+<p>对齐填充<br>对象头：线程 垃圾回收也有点关系</p>
+<p>。。。</p>
+</blockquote>
+<p>对象的访问定位</p>
+<p>​    句柄方式访问对象<br>​    直接指针访问对象</p>
+<p><strong>虚拟机优化技术 — 逃逸分析</strong></p>
+<p>有对象可以在<strong>栈上分配</strong>的，<strong>几乎所有</strong>对象在栈上分配</p>
+<p>hotSpot 默认有<strong>逃逸分析</strong></p>
+<p>本地线程缓冲区<br>如果有逃逸分析，对象可能会在<strong>栈上分配</strong>，这是虚拟机的优化的技术<br><strong>本身这个对象，没有在其他地方使用，所以就直接在栈上分配了</strong> </p>
+<p>逃逸分析使用了可见性？？？，其他的线程也是可见的</p>
+<p><strong>热点跟踪</strong>，使用频繁就会保存起来</p>
+<p>静态方法是也在栈帧里面吗？？？？？</p>
+<p> 逃逸分析为什么快？？？？</p>
+<p>异常处理表？？？ 出现异常了，异常处理表</p>
+<p>oom 和栈溢出区别<br>混合模式，</p>
+<p><strong>直接内存，</strong>元空间（直接内存） 直接内存会挤压堆， 2面性</p>
+<p>一个进程只能开启一个虚拟机吗</p>
+<p>静态属性和静态方法 ,</p>
+<p>当不持有引用的时候可以使用静态方法</p>
+<p><a href="https://www.jianshu.com/p/3ecc626ce304" target="_blank" rel="noopener">逃逸分析和栈上分配</a></p>
+<p><a href="https://blog.csdn.net/chunyuan314/article/details/73266700" target="_blank" rel="noopener">静态属性和静态方法</a></p>
+<p><a href="https://blog.csdn.net/paopaoandguoer/article/details/76206586" target="_blank" rel="noopener">内存溢出OOM和内存泄露memory leak 小结</a></p>
+<p><a href="https://www.cnblogs.com/javaadu/p/10703970.html" target="_blank" rel="noopener">需求管理做不好，等着9-12-7吧</a></p>
+<p><a href="https://www.jianshu.com/p/8de8c6a839e8" target="_blank" rel="noopener">CAS中的ABA问题解决方案</a></p>
+<p><a href="https://www.cnblogs.com/zhengbin/p/6490953.html" target="_blank" rel="noopener"><a href="https://www.cnblogs.com/zhengbin/p/6490953.html" target="_blank" rel="noopener">深入分析对象的内存布局</a></a><br><a href="https://blog.csdn.net/championhengyi/article/details/78760590" target="_blank" rel="noopener">JVM–详解虚拟机字节码执行引擎之静态链接、动态链接与分派</a></p>
+<h5 id="2019-04-16-jvm"><a href="#2019-04-16-jvm" class="headerlink" title="2019-04-16 jvm"></a>2019-04-16 jvm</h5><h4 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h4><p>深入理解垃圾回收器<br>1.jvm垃圾回收及案例分析</p>
+<ul>
+<li>学习垃圾回收的意义，</li>
+<li>java与C++之间的区别：</li>
+</ul>
+<p>GC </p>
+<ul>
+<li>谁需要垃圾回收</li>
+</ul>
+<p>栈=不需要，凡是共享的对象</p>
+<p>堆-重点， 方法区，元空间（也有）</p>
+<ul>
+<li>GC要做的事</li>
+<li>为什么我们要去了解GC和内存分配？</li>
+</ul>
+<p>堆里面继续划分</p>
+<blockquote>
+<p>eden</p>
+<p>from  Survivor</p>
+<p>To Survivor</p>
+<p>ODEGEn  , 堆 -xmn</p>
+</blockquote>
+<p>回收效率低，就抛出了oom GC overhead limit exceeded</p>
+<p>交换区 是 1：1的比列<br>两个交换区始终占两份，所以，当eden为2时， 就是 2：1：1</p>
+<p>-XX：SurvivorRatio =8 </p>
+<p>引用计数：JVM早期使用</p>
+<p>A == &gt; B   （1）</p>
+<p>C ==&gt; B  （1+1）=2</p>
+<p>取消引用 -1 引用+1</p>
+<p>缺点，<br>相互引用<br>A ==》 B  同时 b ==》 a 很难判断是不是该回收 （PHP在使用）</p>
+<p>可达性算法（java）<br>GC Roots 是因为多加了个 s</p>
+<p>1.方法区：类静态属性的对象</p>
+<p>2.方法区：常量</p>
+<p>3.虚拟机栈（本地变量表）中的对象  （方法没完）</p>
+<p> 本地栈jni对象</p>
+<p>只要方法没跳出来，就是gc roots</p>
+<p>new 出来的都是强引用</p>
+<p><strong>软引用</strong>：softreference   当系统要oom了，就会去回收<br>–图片使用内存，然后要oom要释放了</p>
+<p>System.gc主动回收 //gc会消耗性能</p>
+<p>-XX：+printGCDetails</p>
+<p><strong>弱引用</strong>：</p>
+<p>弱引用只要垃圾回收，就会被回收</p>
+<p>weakHashMap<br>ThreadLocal 线程隔离</p>
+<p><strong>虚引用</strong>：PhantomReference 用得非常少 jvm层开发容易用到，回收了会告诉你我要回收了，回收会通知你一下</p>
+<p>新生代：</p>
+<p><strong>复制回收算法</strong>，每次只能用一半</p>
+<ul>
+<li><p>利用率只有一半，</p>
+</li>
+<li><p>实现简单，运行高效</p>
+</li>
+<li><p>内存复制，没有内存碎片</p>
+</li>
+</ul>
+<p>90%的对象不需要进行主动回收，10%   8：1：1<br>很多对象不用去主动回收，使用完了，就释放了</p>
+<p> <strong>8：1：1？？？？？理解</strong></p>
+<p>是取eden里面的对象，是通过对象在serviver区间的移动</p>
+<p>90%对象会被回收，10%不回收，所以复制只有10%</p>
+<p><strong>空间担保：放不下了怎么办</strong></p>
+<p><strong>标记-清除算法</strong>，会产生内存碎片</p>
+<p><strong>标记-整理算法</strong>，内存移动，一定会涉及到效率问题 效率一般般</p>
+<p>minor GC   FUllGc<br>1m只是数据，所有大约占据1.5m空间，对象头和填充</p>
+<p>新生代会带一些头的信息所以大一些<br><strong>新生代为什么会大一点？？？？</strong></p>
+<p><strong>老年区实际大小差不多？？？</strong></p>
+<p><strong>GC的时候才会去交互区吗</strong></p>
+<p>eden存新创建的对象<br>eden经过回收，就去交换区</p>
+<p>eden快满了，就触发GC，然后就交换区间复制</p>
+<p>堆内存的分配策略：</p>
+<ol>
+<li>对象优先在Eden分配  一开始这个区分配</li>
+<li>大对象直接进入老年代 （eden区放不下，就相当于大对象）</li>
+<li>长期存活的对象进入老年代</li>
+<li>动态年龄判断判断</li>
+<li>空间担保</li>
+</ol>
+<p>gc触发条件，就是空间不够了</p>
+<p>分带收集：</p>
+<p>Serial 单线程</p>
+<p>cms 老年代，标记清除算法， （效率很好，空间碎片严重，主流移动互联网用的多）</p>
+<p>GC的时候，出来GC线程，会把所有的线程暂停</p>
+<p>CMS垃圾回收器工作示意图</p>
+<p><strong>cms</strong>给予并行收集与并发收集的<br>并发标记，和用户线程一起进行的</p>
+<p>COncMarkSweep</p>
+<p>怎么设置自己的项目使用哪个收集器。</p>
+<p>初始标记 — 暂停</p>
+<p>并发标记 — 同时进行</p>
+<p>重新标记 — 暂停</p>
+<p>并发清除 — 同时进行</p>
+<p><strong>有浮动垃圾</strong></p>
+<p><strong>jps -v 看垃圾回收命令</strong></p>
+<p>G1垃圾回收器是 1.7提出来的， 可预测性停顿<br>标记整理 + 化整为零</p>
+<p>垃圾回收，都有个内存停顿</p>
+<p>吞吐量  =  cpu时间 100%    gC 10%  业务线程90%   业务线程/总的时间</p>
+<p>内存不够了，垃圾回收不成功了，所以就oom了</p>
+<p>需要的分配空间不够了， </p>
+<p>gc回收不了了，还有对象要进来</p>
+<p>内存泄漏，<br>MAT  GC ROOT 引用的线程是否在频繁调用，    monitor  </p>
+<p>Leakcanary， 代码可以追踪内存</p>
+<p>空间不够了，就触发GC</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-04-14-jvm2/" title="jvm原理" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-04-14-jvm2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-05-26-BroadcastReceiver%E5%8F%91%E9%80%81%E4%B8%8E%E6%8E%A5%E6%94%B6%E7%9A%84%E8%BF%87%E7%A8%8B/" title="broadcoast发送与接收"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-04-15-c%E8%AF%AD%E8%A8%80%E4%B8%80/" title="C,C++基础"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

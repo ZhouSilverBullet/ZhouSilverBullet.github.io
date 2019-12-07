@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>4月份的总结 | Hexo</title>
+  <meta name="description" content="content{:toc}复习内容   gradle使用 jvm  gradle使用 gradle是一种自动构建化语言，目前是android的默认构建工具，是一个编程框架  一些使用命令：   gradlew clean clean项目  gradlew build  构建项目  gradlew assembleDebug or gradlew aD  编译并打包Debug包  gradlew">
+<meta name="keywords" content="android 总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4月份的总结">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="content{:toc}复习内容   gradle使用 jvm  gradle使用 gradle是一种自动构建化语言，目前是android的默认构建工具，是一个编程框架  一些使用命令：   gradlew clean clean项目  gradlew build  构建项目  gradlew assembleDebug or gradlew aD  编译并打包Debug包  gradlew">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T00:13:20.656Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-05-01-4月份的总结" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      4月份的总结
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.457Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/" class="leancloud_visitors"  data-flag-title="4月份的总结">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 10(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}<h4 id="复习内容"><a href="#复习内容" class="headerlink" title="复习内容"></a>复习内容</h4></li>
+</ul>
+<ol>
+<li>gradle使用</li>
+<li>jvm</li>
+</ol>
+<h5 id="gradle使用"><a href="#gradle使用" class="headerlink" title="gradle使用"></a>gradle使用</h5><ol>
+<li><p>gradle是一种自动构建化语言，目前是android的默认构建工具，是一个编程框架</p>
+</li>
+<li><p>一些使用命令：</p>
+<blockquote>
+<p> gradlew clean clean项目</p>
+<p> gradlew build  构建项目</p>
+<p> gradlew assembleDebug or gradlew aD  编译并打包Debug包</p>
+<p> gradlew assembleRelease or gradlew aR  编译并打release包</p>
+<p> gradlew installRelease  or   gradlew iR  release模式打包并安装</p>
+<p> gradlew installDebug  or  gradlew iD   Debug模式打包并安装</p>
+<p> gradlew uninstallRelease or  gradlew uR   卸载Release模式包</p>
+<p> gradlew uninstallDebug or  gradlew uD 卸载Debug模式包</p>
+<p>需要说明的是，有些可以叠加使用</p>
+<p>gradlew clean build —info &gt; bugTags.log</p>
+</blockquote>
+</li>
+<li><p>grooxy语言</p>
+<blockquote>
+<p>def 关键字：返回值</p>
+<p>String: 分两种类型 groovy.lang.GString , java.lang.String</p>
+<p>List: 定义 def value = [“a”,”c”, “b”];  value[0] = 4;  默认是ArrayList </p>
+<p>​    如果需要 LinkedList  value = []; 这样就强制为了 LinkedList了</p>
+<p>Map： def value = [“a”: “str”, “b”: 1]  这里的map是个 []的，不是 {}</p>
+<p>Range：范围值</p>
+<p>metaClass:  在groovy运行期间使用metaClass添加方法和属性</p>
+<p>闭包：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">def</span> listener = (&#123; -&gt; println(<span class="string">"click on"</span>) &#125;)</span><br><span class="line">&gt;演变成：</span><br><span class="line">&gt;<span class="keyword">def</span> listener = &#123; -&gt; println(<span class="string">"click on"</span>) &#125;</span><br><span class="line">&gt;<span class="keyword">def</span> listener = (&#123; println(<span class="string">"click on"</span>) &#125;)</span><br><span class="line">&gt;再演变：</span><br><span class="line">&gt;<span class="keyword">def</span> listener = &#123; println(<span class="string">"click on"</span>) &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>gradle的执行流程</p>
+<ul>
+<li>初始化界面：解析settings.gradle来获取模块信息</li>
+<li>配置阶段：配置每个模块，构建task树</li>
+<li>执行阶段：执行任务</li>
+</ul>
+</li>
+<li><p>project相关的api</p>
+<blockquote>
+<p>getRootProject: 获取根project</p>
+<p>getAllProjects：获取所有Project</p>
+<p>getSubProjects：获取所有的子project</p>
+<p>allProjects：遍历所有的project</p>
+<p>subprojects：遍历所有子project</p>
+</blockquote>
+</li>
+<li><p>属性相关的API</p>
+<p>hasProperty：检测属性是否存在</p>
+<p>findProperty：查找属性</p>
+<p>自定义property：</p>
+<ul>
+<li><p>命令行定义属性 ： gradle build -P pro = 100</p>
+</li>
+<li><p>通过project.ext定义参数</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ext.a = <span class="number">1</span></span><br><span class="line">或者：</span><br><span class="line">ext &#123;</span><br><span class="line">    a = <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>task相关的api</p>
+<ul>
+<li>getTasks: 获取当前project所有task</li>
+<li>task 创建一个task、</li>
+</ul>
+</li>
+<li><p>文件相关的API</p>
+<ul>
+<li>file： 获取文件</li>
+<li>fileTree: 获取文件夹</li>
+<li>getBuildDir：获取build文件夹</li>
+</ul>
+</li>
+<li><p>gradle生命周期API</p>
+<ul>
+<li><p>beforeEvaluate： 配置阶段开始之前</p>
+</li>
+<li><p>afterEvaluate： 配置阶段结束</p>
+<blockquote>
+<p>当走到这里，所有的task的配置都已经完成，然后可以在这里加入自定义的task</p>
+</blockquote>
+</li>
+<li><p>gradle.buildFinished：执行阶段结束</p>
+</li>
+</ul>
+</li>
+<li><p>其它api</p>
+<p>执行外部命令</p>
+<ol>
+<li><p>exec：执行外部命令；是project中的</p>
+<blockquote>
+<p>mac的执行</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   &gt;project.exec &#123;</span><br><span class="line">executable <span class="string">'bash'</span></span><br><span class="line">args <span class="string">'-c'</span>, cmd</span><br><span class="line">   &gt;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>windows执行方式</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   &gt;project.exec &#123;</span><br><span class="line">executable <span class="string">'cmd'</span></span><br><span class="line">args <span class="string">'/c'</span>, cmd</span><br><span class="line">   &gt;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p>Task</p>
+<p>gradle很重要的一个东西</p>
+<ul>
+<li><p>task定义</p>
+<blockquote>
+<p>task myTask {</p>
+<p>​    println “myTask”</p>
+<p>}</p>
+<p>最后一个参数是闭包，所以这里省略了圆括号</p>
+<p>可以通过下面方式创建</p>
+<p>project.tasks.create(name: “myTask”) {</p>
+<p>​    println “myTask”</p>
+<p>}</p>
+</blockquote>
+</li>
+<li><p>task的基本信息配置</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">task MyTask (<span class="string">a:</span> <span class="string">"a"</span>, <span class="string">b:</span> <span class="string">"b"</span>) &#123;println <span class="string">"$a和$b"</span>&#125;</span><br><span class="line">或者</span><br><span class="line">task MyTask &#123;</span><br><span class="line">    a <span class="string">"a"</span></span><br><span class="line">    b <span class="string">"b"</span></span><br><span class="line">    println <span class="string">"$a和$b"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Task依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">task A&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">task b &#123;</span><br><span class="line">    dependsOn A</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们需要执行b的时候会先执行A，然后再执行b</p>
+</li>
+<li><p>task执行</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">task myTask &#123;</span><br><span class="line">    println <span class="string">"1"</span></span><br><span class="line">    doFirst &#123;</span><br><span class="line">        println <span class="string">"2"</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    doLast &#123;</span><br><span class="line">        println <span class="string">"3"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实战自定义plugin</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todo</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</li>
+</ol>
+<h5 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h5><h6 id="1-虚拟机的发展"><a href="#1-虚拟机的发展" class="headerlink" title="1:虚拟机的发展"></a>1:虚拟机的发展</h6><p> go语言去实现jvm是比较简单的</p>
+<blockquote>
+<p>hotSpot VM  目前使用最广的虚拟机； 我的mac上面的sdk用的就是类的</p>
+<p>JRockit VM 号称是最快的java虚拟机；</p>
+<p>J9 VM ibm公司的</p>
+<p>Dalvik VM  google给android使用的虚拟机</p>
+</blockquote>
+<p>未来的java技术</p>
+<blockquote>
+<p>模块化</p>
+<p> OSGI 模块化 </p>
+<p>微服务</p>
+<p>混合语言 （java ， scala）</p>
+<p>多核并行 （函数式编程）</p>
+<p>丰富的语法</p>
+<p>64位</p>
+<p>更强的垃圾回收 回收 gb级别的， jdk11是gb级别的。</p>
+</blockquote>
+<h6 id="2：内存的划分"><a href="#2：内存的划分" class="headerlink" title="2：内存的划分"></a>2：内存的划分</h6><p>线程间共享的：堆和方法区</p>
+<p>线程间独享的： 程序计数器，虚拟机栈，本地方法栈</p>
+<p>​    虚拟机栈中有-&gt; 栈帧：局部变量表，返回地址，操作数栈，动态连接</p>
+<p>独享就是当线程结束了，内容也随之释放了，没有线程安全问题；共享的话，就引入了锁这些问题，不是线程安全的</p>
+<p><strong>程序计数器：</strong>指向当前程序的字节码，线程间需要切来切换去，唯一个没有OOM的地方</p>
+<p>为什么java要是用栈来进行方法调用：因为非常符合java间方法的调用</p>
+<blockquote>
+<p>javap -v Test.class &gt; 1.txt  然后获取字节码</p>
+</blockquote>
+<p><strong>局部变量表</strong>：只能存放32位的数据，放一些方法内部的一些变量，如果是64位，就会使用高低位占用两个也可以存放下来。<strong>存放基本类型的变量数据和对象的引用</strong></p>
+<p><strong>操作数栈</strong>：存放我们方法执行的操作数。它就是一个栈的结构，进行一些数据的计算</p>
+<p><strong>动态连接</strong>：用来多态使用，java动态运行性，需要类加载运行时，才能确定具体的方法</p>
+<p><strong>返回地址</strong>：程序正常执行的时候，就会执行到这里，然后返回</p>
+<h6 id="本地方法栈：各虚拟机自由实现"><a href="#本地方法栈：各虚拟机自由实现" class="headerlink" title="本地方法栈：各虚拟机自由实现"></a>本地方法栈：各虚拟机自由实现</h6><h6 id="线程的共享区域"><a href="#线程的共享区域" class="headerlink" title="线程的共享区域"></a>线程的共享区域</h6><p><strong>方法区/永久代</strong></p>
+<p>用于存储已经被虚拟机记载的类信息，常量（”123“，”asfda“等），静态变量（static变量）</p>
+<p>Jdk7 以及以前： -XX:PermSize: -XX:MaxPermSize;</p>
+<p>jdk1.8 以后： -XX：MetaspaceSize： -XX：MaxMetaspaceSize</p>
+<p>jdk1.8 以后大小就只受本机总内存的限制</p>
+<p><strong>堆</strong></p>
+<p>几乎所有的对象都分配在这里，也是垃圾回收发生的主要区域，可用一些参数进行太调整</p>
+<p>…</p>
+<p><strong>直接内存</strong></p>
+<p>不是虚拟机运行时的数据区的一部分，也不是java虚拟机规范中的定义的内存区域；但是受本机总内存限制。也会产生<strong>OOM</strong></p>
+<h6 id="站在线程的角度来看"><a href="#站在线程的角度来看" class="headerlink" title="站在线程的角度来看"></a>站在线程的角度来看</h6><p>线程的私有内存区：随着产生和消亡，因此不要过多考虑内存回收的问题，编译时就确定了所需内存的大小。</p>
+<h6 id="深入辨析堆和栈"><a href="#深入辨析堆和栈" class="headerlink" title="深入辨析堆和栈"></a>深入辨析堆和栈</h6><p><strong>功能</strong></p>
+<p>以栈帧的方式存储方法的调用过程，并存储方法调用过程中基本数据类型的变量，已经对象的应用变量，其内存分配在栈上，变量出了作用域，就会自动释放。</p>
+<p>而堆内存用来存储java中的对象，无论成员变量，局部变量，还是类的变量，指向的位置是在堆中。（这个怎么画图，应该是对象模型图？？？）</p>
+<p><strong>线程独显还是共享</strong></p>
+<p>栈是属于单个线程所有，相当于线程的私有内存</p>
+<p>堆中的所有对象，对所有线程可间。</p>
+<p><strong>空间大小</strong></p>
+<p>栈的空间远远小于对内存</p>
+<p>当栈进行无限制的递归调用的时候，会出现<strong>OOM</strong>，方法的执行要打包成<strong>栈帧</strong>，<strong>所以天生实现同一个功能的时候要慢</strong>，比如树的遍历递归，比较简单，但是比一般的实现要慢，一般的实现代码比较复杂，但是速度快</p>
+<h5 id="对象的分配"><a href="#对象的分配" class="headerlink" title="对象的分配"></a>对象的分配</h5><p>虚拟机遇到一条new的指令时：</p>
+<p>1）检查加载： 先执行相应的类加载过程。</p>
+<p>2）分配内存：</p>
+<p>​    指针碰撞：确定一块内存是否能存放下这个对象，如果不能，就继续往下找，找不到就进行垃圾回收了，在eden去就进行mirror Gc 等。这个分配过程就是指针碰撞。</p>
+<p>​    空闲列表：如果java堆中的内存并不规整的，已使用的内存空间相互交错，那就没有办法简单的进行指针碰撞，虚拟机必须维护一个列表，记录那些内存块可以用，那些不可用，在分配的时候从列表中找到一块足够大的空间划分给对象，并更新列表上的几率，这个分配方式称为”空闲列表“。</p>
+<p>选择哪种方式由java堆是否规整决定了，还有和采取的算法有关系</p>
+<p><strong>并发安全</strong></p>
+<p>除如何划分空间外，还要考虑并发安全的问题。</p>
+<p>cas操作，如果内存分配失败，会进行重试， bab问题</p>
+<p><strong>分配缓冲</strong></p>
+<p>TLAB，Thread local allocation Buffer，TLAB， 本地线程的分配缓冲，提高分配效率，如果容量不够了，就重新重Eden区域申请。</p>
+<p><strong>内存空间初始化</strong></p>
+<p>就是给 没有初值的成员变量，进行初始值设定</p>
+<p><strong>设置</strong></p>
+<p>接下来，虚拟机堆对象进行必要的设置，例如这个对象是那个类的实例、如何找到类的元数据信息，对象的hash码，对象的GC分带年龄等信息。这些信息存放在对象的对象头之中。</p>
+<p><strong>对象的初始化</strong></p>
+<p>在上面工作完成后，从虚拟机的角度来看，一个新的对象已经产生了，从程序的角度来讲，才刚刚开始。在程序员new了之后，对象就产生了。</p>
+<h5 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h5><p>在hotSpot的虚拟机中，对象在内存中存储的布局分为三块区域：对象头，实例数据和对齐填充。</p>
+<p>对象头包括两部分形象，第一部分用于存储对象自生</p>
+<p><strong>栈上分配</strong></p>
+<p>字符串存放在什么位置</p>
+<p>基本数据类型存放在什么位置</p>
+<p>对象的内存模型</p>
+<h4 id="学习垃圾回收的意义"><a href="#学习垃圾回收的意义" class="headerlink" title="学习垃圾回收的意义"></a>学习垃圾回收的意义</h4><p>java与C++等语言的最大技术的区别：自动化的垃圾回收机制</p>
+<p>为什么要了解GC和内存分配策略</p>
+<p>1、面试需要</p>
+<p>2、GC对应的</p>
+<p>3、写代码有好处</p>
+<p>栈：堆中的生命周期是跟随线程，所以一般不需要关注</p>
+<p>堆：堆中的对象是垃圾回收的重点</p>
+<h5 id="GC案例"><a href="#GC案例" class="headerlink" title="GC案例"></a>GC案例</h5><p>自动回收机制也有失败的时候oom</p>
+<h5 id="新生代配置"><a href="#新生代配置" class="headerlink" title="新生代配置"></a>新生代配置</h5><p>新生代大小配置参数的优先级：</p>
+<h5 id="判断对象的存活"><a href="#判断对象的存活" class="headerlink" title="判断对象的存活"></a>判断对象的存活</h5><p>引用计数法：快，方便，实现简单，缺点：对象相互引用的时候不好判断</p>
+<p>虚拟机栈（栈帧中常用的引用变量表）中引用对象。</p>
+<p>方法区中类静态属性引用的对象。</p>
+<p>方法区中常量引用的对象。</p>
+<p>本地方法栈中JNI引用的对象</p>
+<h5 id="各种引用"><a href="#各种引用" class="headerlink" title="各种引用"></a>各种引用</h5><p><strong>强引用</strong>：new出来的对象都是强引用</p>
+<p><strong>软引用</strong>：softWeakReference 软引用即将发生oom的时候进行回收</p>
+<p><strong>弱引用</strong>：weakReference 发生GC的时候就会被回收，不管内存足不足，都会被回收</p>
+<p><strong>虚引用</strong>：垃圾回收的时候会通知一下</p>
+<p>草稿：</p>
+<p>异常处理器表</p>
+<blockquote>
+</blockquote>
+<p>Class.forName() 和 ClassLoader加载类的区别</p>
+<blockquote>
+<p>Class.forName()：本质是通过ClassLoader加载的，但是会进行一些初始化操作，静态代码块的操作。</p>
+<p>ClassLoader：只是把类记载到虚拟机中，不会有任何初始化操作</p>
+<p><a href="https://www.cnblogs.com/jimoer/p/9185662.html" target="_blank" rel="noopener">在Java的反射中，Class.forName和ClassLoader的区别</a></p>
+</blockquote>
+<p>final关键在内存中的常量区，但是和static不同的是，static类进行加载后，就会被初始化，而final的是在用的时候初始化</p>
+<p><a href="https://www.jianshu.com/p/f68d6ef2dcf0" target="_blank" rel="noopener">Final of Java，这一篇差不多了</a></p>
+<blockquote>
+<p>native堆还是在用户空间，是存在数据从内核到堆外空间的拷贝的</p>
+<p>native堆是在用户空间<br>堆外内存 1次拷贝<br>堆内存 2次拷贝</p>
+</blockquote>
+<p>空间担保</p>
+<p><strong>优化一下简历</strong></p>
+<h4 id="产考"><a href="#产考" class="headerlink" title="产考"></a>产考</h4><p><a href="https://www.jianshu.com/p/91f238947977" target="_blank" rel="noopener">gradlew常用命令</a></p>
+<p><a href="http://www.groovy-lang.org/closures.html" target="_blank" rel="noopener">gradle闭包的官方文档</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/" title="4月份的总结" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-05-01-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%93/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-04-28-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" title="注解和序列化"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-05-02-4%E6%9C%88%E4%BB%BD%E7%9A%84%E6%80%BB%E7%BB%932/" title="4月份的总结2"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

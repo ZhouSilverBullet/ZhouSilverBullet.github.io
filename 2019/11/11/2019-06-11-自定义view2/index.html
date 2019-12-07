@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>求导 | Hexo</title>
+  <meta name="description" content="content{:toc}  1.自定义view，必经之路 为什么要自定义view；   andorid系统内置的view无法实现我们的需求   处于性能考虑 自定义view某种情况下也要实现onLayout ​    自绘和组合： 不知道怎么下手 数学功底 TextView是最难的view，内置的StaticLayout 树形结构，window是虚拟的概念，是为了管理view来虚拟出来的 an">
+<meta name="keywords" content="java 数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="求导">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="content{:toc}  1.自定义view，必经之路 为什么要自定义view；   andorid系统内置的view无法实现我们的需求   处于性能考虑 自定义view某种情况下也要实现onLayout ​    自绘和组合： 不知道怎么下手 数学功底 TextView是最难的view，内置的StaticLayout 树形结构，window是虚拟的概念，是为了管理view来虚拟出来的 an">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T00:14:18.135Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-06-11-自定义view2" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      求导
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.458Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/" class="leancloud_visitors"  data-flag-title="求导">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4.2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <ul>
+<li>content<br>{:toc}</li>
+</ul>
+<p>1.自定义view，必经之路</p>
+<p>为什么要自定义view；</p>
+<p>  andorid系统内置的view无法实现我们的需求</p>
+<p>  处于性能考虑</p>
+<p>自定义view某种情况下也要实现onLayout</p>
+<p>​    自绘和组合： 不知道怎么下手</p>
+<p>数学功底</p>
+<p>TextView是最难的view，内置的<br>StaticLayout</p>
+<p>树形结构，window是虚拟的概念，是为了管理view来虚拟出来的</p>
+<p>android的角度是顺时针的，</p>
+<p>motionEvent里面有getX getRawX</p>
+<p>getTop</p>
+<p>ViewRoot，是个管理view的，</p>
+<p>WindowManagerGlobal  -&gt; 里面创建ViewRootImpl （setView）</p>
+<p>ViewRoot 中</p>
+<p>requestLayout </p>
+<p>performTraversals   -&gt; 计算host.measure   host.layout  host.draw()</p>
+<p>addDisplay()</p>
+<p>如何绘制wrap_content，绘制一个好的view树上</p>
+<p>为了自己适应屏幕，measure，就是把各种尺寸得到一个具体像素，来绘制到屏幕上面来，如果绘制一个自定义树。</p>
+<p>UNSPECIFIED: 这个多次measure来确定子布局的位置</p>
+<p>EXACTLY</p>
+<p>MeasureSpecs：避免过多的内存分配 ；MeasureSpec 是View的一个内部类<br>viewGroup#getChildMeasureSpec；</p>
+<p>Measure这个过程<strong>会多次测量的</strong></p>
+<p>DecorView是根据屏幕大小来决定的</p>
+<p>LayoutParams -》 是在LayoutInflater里面用到；自定义view generateLayoutParams</p>
+<p><strong>MarginLayoutParams 支持margin参数</strong></p>
+<p><strong>自定义LayoutParams</strong></p>
+<p>getRootMeaurse -&gt; performMeasure   -&gt;  mView.measure()   -&gt; onMeasure()</p>
+<p>除了UNSPACE都是用父类的那个测量宽度了</p>
+<p>getMeaureWidth 和 getWidth 的区别：通常情况下是相同的</p>
+<p>//frameLayout的规则代码</p>
+<p>Math.max（0， specSize- padding） 可以绘制的剩余空间</p>
+<p>measureChildWidthMargins</p>
+<p>contentView 在一个线性布局里面，因为还有titlebar在上面</p>
+<p>线性模具 resolveSizeAndState</p>
+<p><strong>自定义attrs也可以通过@bindingAdapter的方式</strong></p>
+<p><strong>getWidth()和getMesureWidth()讲了嘛</strong></p>
+<p><strong>SurfaceFling可以进行优化性能</strong></p>
+<p><strong>启航 自定义View系列也不错</strong></p>
+<p>DecorView跟刘海屏有什么关系吗</p>
+<p>从外往内递归，然后从内往外返回宽高</p>
+<p>父如果自适应，那父的大小就是由子决定的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">SystemServer # startOtherServices </span><br><span class="line"></span><br><span class="line">wm = WindowManagerService.main(context, inputManager,</span><br><span class="line">        mFactoryTestMode != FactoryTest.FACTORY_TEST_LOW_LEVEL,</span><br><span class="line">        !mFirstBoot, mOnlyCore, <span class="keyword">new</span> PhoneWindowManager()); <span class="comment">//这里直接new了一个phoneWindowManager</span></span><br><span class="line">        </span><br><span class="line"><span class="comment">//...中间是启动activity的过程，直接跳过了</span></span><br><span class="line"></span><br><span class="line">activity = mInstrumentation.newActivity(</span><br><span class="line">                    cl, component.getClassName(), r.intent);</span><br><span class="line">                    </span><br><span class="line">activity.attach(appContext, <span class="keyword">this</span>, getInstrumentation(), r.token,</span><br><span class="line">                        r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">                        r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">                        r.referrer, r.voiceInteractor, window, r.configCallback);</span><br><span class="line">                        </span><br><span class="line">                        </span><br><span class="line">activity#attatch &#123;</span><br><span class="line">    mWindow = <span class="keyword">new</span> PhoneWindow(<span class="keyword">this</span>, window, activityConfigCallback);</span><br><span class="line">    <span class="comment">//把windowmanager设置进去了</span></span><br><span class="line">     mWindow.setWindowManager(</span><br><span class="line">                (WindowManager)context.getSystemService(Context.WINDOW_SERVICE),</span><br><span class="line">                mToken, mComponent.flattenToString(),</span><br><span class="line">                (info.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="number">0</span>);</span><br><span class="line">&#125;                      </span><br><span class="line"></span><br><span class="line"><span class="comment">//这个winodow实际是PhoneWindow对象</span></span><br><span class="line">Window#setWindowManager &#123;</span><br><span class="line">	<span class="comment">//创建了WindowManagerImpl，并且传进了 PhoneWindow对象，这里和service不一样的地方，所以可以显示对话框</span></span><br><span class="line">    mWindowManager = ((WindowManagerImpl)wm).createLocalWindowManager(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后跑到 ActivityThread#handleResumeActivity 进行了addView操作，因为onCreate的时候界面还没有显示出来</span><br><span class="line">ActivityThread#handleResumeActivity &#123;</span><br><span class="line">	<span class="comment">//进行了addView</span></span><br><span class="line">	<span class="comment">//这个就是获取了activity#attach获取的创建好的PhoneWindow的mWindowManager = mWindow.getWindowManager();</span></span><br><span class="line">	<span class="comment">//这里用了 依赖倒置原则，vm其实本质是个WindowManagerImpl</span></span><br><span class="line">	ViewManager wm = a.getWindowManager();</span><br><span class="line">	wm.addView(decor, l);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">然后接下来就  </span><br><span class="line">WindowManagerImpl # addView  -》 global # addView </span><br><span class="line">-》 ViewRootImpl # addView ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~~<span class="comment">//这里断了，不知道怎么调到  WindowManagerImpl # addView  -》 global # addView~~~</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>activityManagerService 怎么socket通知Zygote创建进程的，这个socket在哪里发送的</p>
+<p>最近看源码发现：怎么保护线程不死</p>
+<p>ZygoteInit-&gt;  runSelectLoop方法里面while(true) -&gt;  socket#accept来进行阻塞</p>
+<p>要么就是用Looper.prepare()  -&gt;  Looper.loop() 这两个组合来进行维护这个线程不被释放</p>
+<blockquote>
+<p>SystemServer；ActivityThread</p>
+</blockquote>
+<pre><code>我觉得吧，如果要到自己线程进行干事情的话，肯定是使用Looper这个组合。</code></pre><p>​    ZygoteInit是通过sokect这种通信机制来进行等待AMS的请求 创建一个新的进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">zygoteInit# main &#123;</span><br><span class="line">	forkSystemServer &#123;</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">    runSelectLoop &#123;</span><br><span class="line">    	//这个方法有等待，等待AMS的socket信号</span><br><span class="line">        acceptCommandPeer()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AMS # startProcessLocked </span><br><span class="line">AMS # startProcessLocked(参数多)</span><br><span class="line">AMS # startProcess &#123;</span><br><span class="line">     startResult = Process.start(entryPoint,</span><br><span class="line">                        app.processName, uid, uid, gids, runtimeFlags, mountExternal,</span><br><span class="line">                        app.info.targetSdkVersion, seInfo, requiredAbi, instructionSet,</span><br><span class="line">                        app.info.dataDir, invokeWith,</span><br><span class="line">                        new String[] &#123;PROC_START_SEQ_IDENT + app.startSeq&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>马尔科夫模型</p>
+<p>和算法相关的。</p>
+<p>时间复杂度，空间复杂度</p>
+<p>知道多少种算法 【深度优先遍历，广度优先遍历】</p>
+<p>，回溯法，分治算法，贪心算法，动态规划</p>
+<p>一个问题怎么想到用动态规划</p>
+<p>问题得到问题规模增大导致的变化</p>
+<p>递推式–状态转移方程</p>
+<p>结合侓，，每天学一点算法，挺有意思的</p>
+<p>朴素算法。逆波兰表达式，栈的典型应用，（编译原理）可能会用到</p>
+<p><strong>zero老师有没有管理经验</strong></p>
+<p>1.ViewGroup开始测量自己的尺寸</p>
+<p>​    1.尺寸值，200dp， match_parent，wrap_content</p>
+<p>2.为每个子view计算测量的限制信息</p>
+<p>3.把上一步确定的限制信息，传递给每个子view</p>
+<p>​    树形递归过程，子view调取自己的measure过程</p>
+<p>4.viewGroup 获取每个子view测量的尺寸，wrap_content<br>5.ViewGroup根据自身的情况计算自己的尺寸</p>
+<p>6.保存自身的尺寸</p>
+<p>类图+时序图 ； 多动手</p>
+<p>getWidth 和 getLayoutParams().width的区别：<br>getLayoutParams()返回的是xml布局里面设置的。getLayoutParams().width返回的是xml里面android:width的值。是在onMeasure之前的值。<br>getwidth返回的是onMeasure之后的值。</p>
+<p>18670301864</p>
+<p>Wrap_content怎么确定控件的高度和宽度的，</p>
+<p>绘制完了才有的getHeight的值</p>
+<p>measure之后，wrap_content，match_parent都有值了</p>
+<p>performLayout -&gt; decroVIew (View的layout).layout -&gt;  setFrame</p>
+<p>view里面尽然有onLayout</p>
+<p>onLayout：基本都是if else 加坐标计算</p>
+<p>​        根据规则确定子view的位置</p>
+<p>​        流程：</p>
+<p>​        1.遍历子view，for</p>
+<p>​        2.确定自己的规则</p>
+<p>​        3.子View的测量尺寸  l ,t, b,r   left,top,bottom,right</p>
+<p>​        4.left,top,bottom,right</p>
+<p>​        5.child.layout</p>
+<p>如何去阅读源码</p>
+<p>1带着问题去看：找到什么东西</p>
+<p>2点到为止：不要太在意细节</p>
+<p>3看方法，方法名，返回值，参数，</p>
+<p>问题： 控件的wrap_content，match_patent怎么确定的</p>
+<p>控件在onLayout的时候为什么不用getHeight/getWidth而是用getMeasureHeight/getMeasureWidth，</p>
+<p>layoutParams getwith， 和控件的getWidth的区别-》layoutParams getwith相当于xml布局里头的layout_width<br>    而getWidth是 mRight - mLeft,</p>
+<p>1.时间复杂度，</p>
+<p>n 表示数据规则</p>
+<p>O(f(n)) 表示运行算法所需要</p>
+<p>二分查找法 O(logn)</p>
+<p>寻找数组 O(n)  </p>
+<p>细节上的优化</p>
+<p>归并排序 算法时间复杂度 O(nlogn)</p>
+<p>O(n^2 + nlogn)  n的规模是一样的情况下就是 O(n^2)</p>
+<p>快速排序算法，可能会退化成O(n^2) 平均情况是  nlogn</p>
+<p>![image-20190615102246363](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615102246363.png)</p>
+<p>多开一个辅助的数组 O(n)</p>
+<p>多开一个辅助的二维数组：O(n)</p>
+<p>多开一个常量O(1)</p>
+<p>递归调用是有空间代价的</p>
+<p>Assert(n &gt;= 0)</p>
+<p>![image-20190615102827840](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615102827840.png)</p>
+<p>递归的深度多少，就是多少空间复杂度</p>
+<p>递归的深度是多 O(m) 级别的空间复杂度,m是深度</p>
+<p>![image-20190615103301021](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615103301021.png)</p>
+<p>![image-20190615103350803](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615103350803.png)</p>
+<p>for循环里面先进行  int j+1; j&lt;n 这个判断后才会往下走，然后走完就j++</p>
+<p>选择排序</p>
+<p><strong>For(int j=0, j&lt;n ;j++) {</strong></p>
+<p><strong>For(int j=0, j&lt;10000 ;j++) { //这个10000不算入时间复杂度上</strong></p>
+<p><strong>}</strong></p>
+<p><strong>}</strong></p>
+<p>![image-20190615103800925](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615103800925.png)</p>
+<p>![image-20190615104015935](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615104015935.png)</p>
+<p>![image-20190615104235105](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615104235105.png)</p>
+<p>n 除以 xx 等于1，然后就是logn</p>
+<p>![image-20190615104546622](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615104546622.png)</p>
+<p>O(sqrt(n)) 根号n  判断是否是个素数</p>
+<p>具体问题，具体分析。</p>
+<p>二分查找法基本就是递归查找法</p>
+<p>binarySearch 二分查找</p>
+<p>![image-20190615110649958](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615110649958.png)</p>
+<p>pow (double x, int n)</p>
+<p>![image-20190615110944775](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615110944775.png)</p>
+<p>————]————————-</p>
+<p>![image-20190615133355295](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190615133355295.png)</p>
+<p>二分查找法</p>
+<p>没有没有bug的二分查找法在1962年</p>
+<p><strong>l+(r-l)/2 -&gt; 通过减法来进行</strong></p>
+<p><strong>考虑边界情况，是否为空，是否不在集合中</strong></p>
+<p>如何写出正确的程序：</p>
+<p>明确变量的含义 ， 循环不变量， 小数据量调试</p>
+<p>forceClosed, —&gt; true 就是个闭合的 false就是开口的</p>
+<p>getLength 获取具体的长度</p>
+<p>getSegment 路径的片段</p>
+<p>是否截取上次的</p>
+<p>getPosTan   路径上的某点坐标，起始点的坐标</p>
+<p>弗兰克尔在 追寻生命的意义 中说过</p>
+<p>环境可能是无法改变的，唯一可以改变的是自己的态度</p>
+<p>我们所处的环境就是一个巨大的鸟笼</p>
+<p>我们无时无刻都生活在这个鸟笼中</p>
+<p>有太多的人想要飞出这个笼子寻找自由</p>
+<p>但不是每个人都能像安迪那样长出丰满的羽翼</p>
+<p>所以固化的生活成了我们大部分人的常态</p>
+<p>onTouchEvent来进行判断</p>
+<p>mCacheViews —默认大小 2</p>
+<p>每次移除第一个</p>
+<p>pool 的大小是5个</p>
+<p>onLayout 布局里面</p>
+<p>mChangeScrap 与 mAttachedScrap</p>
+<p>mCachedViews</p>
+<p>mViewCacheExtension</p>
+<p>RecyclerViewPool</p>
+<p>什么时候回收，什么时候复用</p>
+<p>滑动快的时候，多创建的ViewHolder是怎么回事</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">RecyclerView#OnTouchEvent的move事件中</span><br><span class="line">	RecyclerView#scrollByInternal</span><br><span class="line">		LayoutManager#scrollHorizontallyBy</span><br><span class="line">  		LayoutManager#scrollBy</span><br><span class="line">				LayoutManager#fill</span><br><span class="line"></span><br><span class="line">LayoutManager#fill (回收和复用)</span><br><span class="line">  layoutManger#layoutChunk &#123;</span><br><span class="line">  	layoutState.next(recycler);</span><br><span class="line">	&#125;</span><br><span class="line">			recycler（RecyclerView.recycler已经回到了RecyclerView中</span><br><span class="line">			）.getViewForPosition(mCurrentPosition) &#123;</span><br><span class="line">        	getScrapOrCachedViewForId中经过</span><br><span class="line">            	mAttachedScrap</span><br><span class="line">				  mViewCacheExtension</span><br><span class="line">          mRecyclerPool</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>onCreate </p>
+<p>onBind</p>
+<p>getViewForPosition</p>
+<p>ItemTouchHelper 来进行RecyclerView的拖动View</p>
+<p>ItemTouchHelper的使用</p>
+<p>Callback callback = new C()</p>
+<p>ItemTouchHelper touch = new ItemTouchHelper(callback)</p>
+<p>touch.attachToRecyclerView(rv)</p>
+<p>15怎么来的可以解析一下不</p>
+<p>onChidrenDraw 就是 RecyclerView onDraw回调的</p>
+<p>recyclerView.getChildCount是4个，而不是8个，指的是显示的个数是4个</p>
+<p><strong>只要子view把事件消耗了，中间的view，就没有UP事件了，可能有move事件</strong></p>
+<p>平滑滚动：</p>
+<p>自定义布局的流程：</p>
+<p>​    1.自定义属性：声明，设置，解析获取自定义值</p>
+<p>​    2.测量：在onMeasure中 MeasureSpac.AT_MOST/EXACTIY</p>
+<p>​        自身的宽与高/child的宽高</p>
+<p>   3.布局：onLayout</p>
+<p>   4.绘制：onDraw方法  绘制分割线什么的</p>
+<p>  5.处理LayoutParams</p>
+<p>  6.触摸反馈：滑动事件</p>
+<p><strong>onDispatchDraw？？？</strong></p>
+<p>互联网思维啊(迭代思想)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//要想滑动必须消耗事件</span></span><br><span class="line"><span class="comment">//onTouchEvent里面返回true，才有后续的move和up事件</span></span><br><span class="line"><span class="comment">//就是说不返回true的话，就没有move和up事件了</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>实现滑动，然后再实现阻尼效果，然后实现滑动选择器。这些都跟滑动有关</p>
+<p>厉害的人很早就开始厉害了</p>
+<p>拥有强烈的成功欲望</p>
+<p>拥有说干就干的行动力</p>
+<p>都是深度学习的机器</p>
+<p>都善于坚持</p>
+<p>都愿意延迟满足</p>
+<h3 id="袁阔成评书网"><a href="#袁阔成评书网" class="headerlink" title="[袁阔成评书网]"></a>[袁阔成评书网]</h3><p>Xfermode</p>
+<p>UNSPECIFIED 部分测试</p>
+<p>wrap_content往往会传个携带父类大小的size给子类</p>
+<p>​                        然后往往是小于父类这个值得</p>
+<p>相当于padding是什么时候有效：是在测量的时候有效吗</p>
+<p>​    measureChild(child, Wspec, Hspec)</p>
+<p>textView放大镜 zero老师最拿手textView</p>
+<p>控件滑动起来：1.view的scrollBy scrollTo方法实现滑动</p>
+<p>​                            2.通过动画来给view添加位移效果，实现滑动</p>
+<p>​                            3.通过改变view的LayoutParams，让view重新布局，从而重新滑动</p>
+<p>wps  visio</p>
+<p>professional visio</p>
+<p>相当于canvas坐标移动了50</p>
+<p>移动的是画布</p>
+<p>相当于原点变成了（50，50）</p>
+<p>//移动的是画布</p>
+<p>canvas.translate(mLeft-sx,mTop-sy)</p>
+<p>6中方式实现移动~</p>
+<p>最终的两种移动方式：layout参数；移动动画布</p>
+<p>压力信号-》 InputWindowManager    最初的是InputManagerService？</p>
+<p>然后传到窗口的activity</p>
+<p>事件的分发流程</p>
+<p>事件的监听流程</p>
+<p>事件的记忆机制：如果已经返回true了，就不会给其他的view了</p>
+<p>每一个viewGroup都是事件的分发节点，维护了一个TouchTarget的链表</p>
+<p>记录哪个子View的消耗该时间的</p>
+<p>截获机制：action_down事件一定可截获的，</p>
+<p>非down时间，若子类</p>
+<p>分裂机制：</p>
+<p>设置gravity，事件的几种机制</p>
+<p>如何重构</p>
+<p>版本冲突解决：</p>
+<p><a href="https://blog.csdn.net/qq_32452623/article/details/81323193" target="_blank" rel="noopener">https://blog.csdn.net/qq_32452623/article/details/81323193</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">androidTestImplementation (<span class="string">'com.android.support.test:runner:1.0.2'</span>)&#123;</span><br><span class="line">      exclude group: <span class="string">'com.android.support'</span></span><br><span class="line">  &#125;</span><br><span class="line">  androidTestImplementation (<span class="string">'com.android.support.test.espresso:espresso-core:3.0.2'</span>)&#123;</span><br><span class="line">      exclude group: <span class="string">'com.android.support'</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>本身来进行消耗：dx &lt; dy     dy&gt; min  排除误操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">finalChild</span><br></pre></td></tr></table></figure>
+
+<p>曾经有伟人说过，30岁之前做加法，因为不知道自己能做什么，30岁之后要做减法，做有把握的事</p>
+<p>滑动的是内容</p>
+<p>长按会影响，滑动效果，会有滑动跳动</p>
+<p>realHeight - 父布局高度</p>
+<p>computeScroll</p>
+<p>invalidate如果没 invalidate完，就不会再调用了</p>
+<p>postInvalidate如果</p>
+<p>这里和属性动画那一块内核倒是很像</p>
+<p>plos</p>
+<p>sourceTree</p>
+<p>git区块链算法：</p>
+<p>集中式，只有服务器有一份，服务器连接不上</p>
+<p>​    就commit和回滚都不能做了</p>
+<p>分布式，本地也有一份管理</p>
+<p>​    分布式的话每一个人本地都是一份完整的代码版本，即使服务器版本比你低，也会进行分享覆盖的</p>
+<p>​    文件的形式进行存储，快照就是当前文件的copy</p>
+<p>Fetch是拉新分支  刷新本地分支的状态， 就可以看到本地的分支可以远程分支一样了</p>
+<p>gitk&amp;</p>
+<p>git后缀的那个文件里面会保存你的详细信息，以及版本的详细信息，存在暂存区和本地仓库中，版本那个比较貌似是tree，文件blob的形式</p>
+<blockquote>
+<p>git status</p>
+<p>Git add —all  到了暂存区</p>
+<p>Git commit -m </p>
+<p>clone checkout add commit push</p>
+<p>unmodify已经被管理了 不需要进行add操作</p>
+<p>Untracked  （追踪）没有被管理起来的文件 —&gt; stage</p>
+<p>文件的4中状态</p>
+<p>你们的分支管理有按照git flow管理吗<br>develop<br>feature/<br>release/<br>bugfix/<br>master</p>
+<p>更换远程仓库</p>
+<p>git remote add <new-url></p>
+<p>git的权威文档</p>
+<p><a href="https://git-scm.com/book/zh/v2" target="_blank" rel="noopener">https://git-scm.com/book/zh/v2</a></p>
+<p>alicode这个比较好，免费的</p>
+</blockquote>
+<p>git remote add origin <a href="https://gitee.com/zhousaito/adadfa.git" target="_blank" rel="noopener">https://gitee.com/zhousaito/adadfa.git</a></p>
+<p>git branch -vv  当前处于哪个分支</p>
+<p>Fetch  是拉取远程仓库信息 到 本地仓库，pull 是拉取远程分支代码到当前分支</p>
+<p>Git config core.ignorecase false  不要忽略大小写</p>
+<p>git config core.ignorecase false</p>
+<p><a href="https://github.com/github/gitignore" target="_blank" rel="noopener">https://github.com/github/gitignore</a></p>
+<p>objects里面存了blob文件和tree，tree比较计算版本信息</p>
+<p>git status 多执行这个命令</p>
+<p>git diff  比较没有提交的修改的文件</p>
+<p>git diff --staged</p>
+<p>git diff --cached</p>
+<p>git push —set-upstream origin master</p>
+<p>git branch</p>
+<p>gitk 命令 需要自己安装</p>
+<p>git branch -D</p>
+<p>HEAD 指针</p>
+<p>Rebase 会有多次冲突的 ，分支上的历史就没了</p>
+<p>merge的话，分支的还有</p>
+<p>git checkout –conflict=diff3 conflicts/testfile</p>
+<p>git checkout –ours conflicts/testfile</p>
+<p>OverScroller</p>
+<p>视图动画</p>
+<pre><code>&gt;补间动画(旋转，平移，缩放，透明)
+&gt;
+&gt;帧动画
+&gt;
+&gt;​    AnimationDrawable对象来添加，这样可以通过代码来实现
+&gt;
+&gt;​    
+&gt;
+&gt;插值器:缓动函数
+&gt;
+&gt;​    startOffset
+&gt;
+&gt;
+&gt;
+&gt;触摸反馈动画
+&gt;
+&gt;转场动画  [ 共享元素的动画]
+&gt;
+&gt;视图状态动画
+&gt;
+&gt;矢量图动画
+&gt;
+&gt;约束布局
+&gt;
+&gt;揭露动画
+&gt;
+&gt;Spring动画
+&gt;lottie-android
+&gt;
+&gt;
+&gt;</code></pre><p>属性动画</p>
+<p>draw：</p>
+<p>![image-20190702201748578](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190702201748578.png)</p>
+<p>设置绘制风格</p>
+<p>抗锯齿</p>
+<p>绘制路径效果  setPatchEffect 绘制虚线</p>
+<p>setShader</p>
+<p>setStyle 设置画笔的填充风格</p>
+<p>setTextAlign 文字对齐方式</p>
+<p>setTextScaleX 设置文字水平拉伸比例</p>
+<p>setStokeCap  画笔形状</p>
+<p>setStrokeJoin 画笔转弯处的连接风格</p>
+<p>Canvas.</p>
+<p>drawArc (也可以画圆吗)</p>
+<p>drawCircle</p>
+<p>drawOval 椭圆</p>
+<p>drawRoundRect 圆角矩形</p>
+<p>convas.drawPicxture (画图片) 一般webView</p>
+<p>stroke会把圆占地面积变大</p>
+<p>![image-20190702203410555](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190702203410555.png)</p>
+<p>​    path.close()</p>
+<p>​    android 顺时针为正，跟数学的坐标角度相反</p>
+<p>​    useCenter 这个为true就可以画扇形，</p>
+<p>​    如果useCenter为false，如果fill就会直接封过去</p>
+<p>moveTo lineTo</p>
+<p>shader 渐变器</p>
+<p>线性渐变，弧形渐变</p>
+<p>LinearGradient </p>
+<p>skew扭曲 </p>
+<p>Canvas.scale 画布是可以缩放的</p>
+<p>Canvas.clipRect  获取裁剪</p>
+<p>Xfermode玩不动</p>
+<p>保存与回滚  (就跟栈一样，每次保存就保存在栈里面</p>
+<p>最后，restore，然后就相当于弹栈)</p>
+<p>裁剪和平移不一样</p>
+<p>裁剪不会改变坐标的，平移会改变坐标的</p>
+<p>canvas相当于一个图层</p>
+<p>setShadowLine 设置阴影</p>
+<p>文字测量</p>
+<p>Staticlayout 来进行测试</p>
+<p>mPaint.setStrokeCap(Paint.cap.round) //画出椭圆的效果</p>
+<p>mPaint.setTestAlign()</p>
+<p>方法一、</p>
+<p>//来进行得到text的一个rect</p>
+<p>mPaint.getTextBounds()</p>
+<p>(ract.top + ract.bottom)/2</p>
+<p>方法二、</p>
+<p>Ascent  descent</p>
+<p>mPaint.getFontMetics(founmetric)</p>
+<p>(founmetric.ascent + fontMetrics.descent)/2 来计算</p>
+<p>自定义view，大小要通过onMeasure来确定的<br>应为放在scrollView里面，会变白，是因为没有重写onMeasure方法</p>
+<p>列个Android坑大全</p>
+<p>文字有默认间距</p>
+<p>多行文字绘制：StaticLayout </p>
+<p>丘比特之线</p>
+<p>对于大部分中文英文，distance用top和bottom计算，有偏差，字体被偏下了一点点，应该用ascent和descent计算<br>部分国家的特殊字符的上下高度会超过descent，ascent，用top和bottom计算</p>
+<h2 id="一个基于-Python-的简单服务"><a href="#一个基于-Python-的简单服务" class="headerlink" title="一个基于 Python 的简单服务"></a>一个基于 Python 的简单服务</h2><p>一行代码搞定服务器</p>
+<p>python -m SimpleHTTPServer <port></p>
+<p>Python3 -m http.server <port></p>
+<p>视频剪辑这一类， 自定义view，</p>
+<p>breakText 做多行绘制</p>
+<p><strong>裁剪画布</strong> 可以做出多种类型的图片出来<br>绘制bitmap</p>
+<p>D:\android9\development\samples\ApiDemos\src\com\example\android\apis\graphics</p>
+<p>官方demo<br>要个手写签名</p>
+<p>canvas的底层原理matrix</p>
+<p>canvas的操作原理</p>
+<p>横着 乘以 竖着</p>
+<p>matrix.set 会清空上次的操作</p>
+<p>旋转，如果没设置就是(0，0)，可以进行设置</p>
+<p>局部缩放  matrix.setScale()</p>
+<p>扭曲 -》可以做翻页 扭曲做3d效果</p>
+<p>preTranslate </p>
+<p>postRotate   </p>
+<p>rgba 还是 argb</p>
+<p>安徽数学会学到高数和微积分</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/" title="求导" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-06-11-%E8%87%AA%E5%AE%9A%E4%B9%89view2/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-06-10-%E5%8F%8D%E7%BC%96%E8%AF%91/" title="反编译"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-06-26-exercise/" title="exercise"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

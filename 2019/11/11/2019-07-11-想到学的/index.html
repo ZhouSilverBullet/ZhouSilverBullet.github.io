@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>2019-07-11-想到学的 | Hexo</title>
+  <meta name="description" content="webview的优化  https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5d2605f8f265da1bc23fa07c?utm_source=gold_browser_extension   javaweb简单的知识  Vue   idea 添加 VUE 的语法支持和开发 https:&#x2F;&#x2F;blog.csdn.net&#x2F;sl1990129&#x2F;article&#x2F;details&#x2F;83794024 gette">
+<meta name="keywords" content="Android,mobile,Java,Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019-07-11-想到学的">
+<meta property="og:url" content="http:&#x2F;&#x2F;zhousaito.top&#x2F;2019&#x2F;11&#x2F;11&#x2F;2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84&#x2F;index.html">
+<meta property="og:site_name" content="周周博客">
+<meta property="og:description" content="webview的优化  https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5d2605f8f265da1bc23fa07c?utm_source=gold_browser_extension   javaweb简单的知识  Vue   idea 添加 VUE 的语法支持和开发 https:&#x2F;&#x2F;blog.csdn.net&#x2F;sl1990129&#x2F;article&#x2F;details&#x2F;83794024 gette">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-11T05:40:29.459Z">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhousaito.top/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="周周博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ZhouSilverBullet" target="_blank">
+          <img class="img-circle img-rotate" src="/images/zhousaito_avatar.jpeg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Zhou Saito</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Android Developer &amp; Designer</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> BeiJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ButterKnife/">ButterKnife</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E5%9F%BA%E7%A1%80/">C++基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/android/">android</a><span class="category-list-count">14</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/broadcoast/">broadcoast</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/classload/">classload</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ffmpeg/">ffmpeg</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/flutter/">flutter</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/groovy/">groovy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/hook/">hook</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">java多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/jitpack/">jitpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kotlin/">kotlin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/markdown/">markdown</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91/">事件分发</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8F%8D%E7%BC%96%E8%AF%91/">反编译</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B1%82%E5%AF%BC/">求导</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AC%94%E8%AE%B0/">笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%87%AA%E5%AE%9A%E4%B9%89View/">自定义View</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C-NDK/" rel="tag">C C++ NDK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="tag">android android开发遇到的问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E6%A1%86%E6%9E%B6/" rel="tag">android android框架</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" rel="tag">android android编写规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android android设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" rel="tag">android behavior使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-file/" rel="tag">android file</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter/" rel="tag">android flutter</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-flutter-dart/" rel="tag">android flutter dart</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-gradle/" rel="tag">android gradle</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java/" rel="tag">android java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-jvm/" rel="tag">android java jvm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" rel="tag">android java 反编译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" rel="tag">android java 多线程 并发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E7%AC%94%E8%AE%B0/" rel="tag">android java 笔记</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-java-%E8%BF%9B%E9%98%B6/" rel="tag">android java 进阶</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-kotlin/" rel="tag">android kotlin</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-notification/" rel="tag">android notification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-rxjava/" rel="tag">android rxjava</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-view/" rel="tag">android view</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%80%BB%E7%BB%93/" rel="tag">android 总结</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="tag">android 模块化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag">android 注解和序列化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" rel="tag">android 自定义View</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/classload/" rel="tag">classload</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/groovy-gradle/" rel="tag">groovy gradle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">java android 设计模式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-%E6%95%B0%E5%AD%A6/" rel="tag">java 数学</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" rel="tag">jitpack jitpack简单使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" rel="tag">markdown markdown使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">个人博客搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" rel="tag">博客搭建笔记 博客搭建备忘录</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" rel="tag">数据结构 算法</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/C-C-NDK/" style="font-size: 13px;">C C++ NDK</a> <a href="/tags/android/" style="font-size: 13.67px;">android</a> <a href="/tags/android-android%E5%BC%80%E5%8F%91%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" style="font-size: 13px;">android android开发遇到的问题</a> <a href="/tags/android-android%E6%A1%86%E6%9E%B6/" style="font-size: 13px;">android android框架</a> <a href="/tags/android-android%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/" style="font-size: 13px;">android android编写规范</a> <a href="/tags/android-android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android android设计模式</a> <a href="/tags/android-behavior%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">android behavior使用</a> <a href="/tags/android-file/" style="font-size: 13.33px;">android file</a> <a href="/tags/android-flutter/" style="font-size: 13.67px;">android flutter</a> <a href="/tags/android-flutter-dart/" style="font-size: 13.67px;">android flutter dart</a> <a href="/tags/android-gradle/" style="font-size: 13.33px;">android gradle</a> <a href="/tags/android-java/" style="font-size: 13px;">android java</a> <a href="/tags/android-java-jvm/" style="font-size: 13.33px;">android java jvm</a> <a href="/tags/android-java-%E5%8F%8D%E7%BC%96%E8%AF%91/" style="font-size: 13px;">android java 反编译</a> <a href="/tags/android-java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91/" style="font-size: 13px;">android java 多线程 并发</a> <a href="/tags/android-java-%E7%AC%94%E8%AE%B0/" style="font-size: 13px;">android java 笔记</a> <a href="/tags/android-java-%E8%BF%9B%E9%98%B6/" style="font-size: 14px;">android java 进阶</a> <a href="/tags/android-kotlin/" style="font-size: 13px;">android kotlin</a> <a href="/tags/android-notification/" style="font-size: 13px;">android notification</a> <a href="/tags/android-rxjava/" style="font-size: 13px;">android rxjava</a> <a href="/tags/android-view/" style="font-size: 13.33px;">android view</a> <a href="/tags/android-%E6%80%BB%E7%BB%93/" style="font-size: 13.33px;">android 总结</a> <a href="/tags/android-%E6%A8%A1%E5%9D%97%E5%8C%96/" style="font-size: 13px;">android 模块化</a> <a href="/tags/android-%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%BA%8F%E5%88%97%E5%8C%96/" style="font-size: 13px;">android 注解和序列化</a> <a href="/tags/android-%E8%87%AA%E5%AE%9A%E4%B9%89View/" style="font-size: 13px;">android 自定义View</a> <a href="/tags/android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">android 设计模式</a> <a href="/tags/classload/" style="font-size: 13px;">classload</a> <a href="/tags/ffmpeg/" style="font-size: 13.33px;">ffmpeg</a> <a href="/tags/flutter/" style="font-size: 13px;">flutter</a> <a href="/tags/groovy-gradle/" style="font-size: 13px;">groovy gradle</a> <a href="/tags/java-android-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 13px;">java android 设计模式</a> <a href="/tags/java-%E6%95%B0%E5%AD%A6/" style="font-size: 13.33px;">java 数学</a> <a href="/tags/jitpack-jitpack%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">jitpack jitpack简单使用</a> <a href="/tags/markdown-markdown%E4%BD%BF%E7%94%A8/" style="font-size: 13px;">markdown markdown使用</a> <a href="/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" style="font-size: 13px;">个人博客搭建</a> <a href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E7%AC%94%E8%AE%B0-%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%A4%87%E5%BF%98%E5%BD%95/" style="font-size: 13px;">博客搭建笔记 博客搭建备忘录</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%AE%97%E6%B3%95/" style="font-size: 13px;">数据结构 算法</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">49</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/13/hello-world/" class="title">Hello World</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-13T01:07:32.832Z" itemprop="datePublished">2019-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/">博客搭建指南</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" class="title">自己的域名绑定github博客</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:52:57.099Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="title">2019-07-11-想到学的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" class="title">2019-07-24-app开发步骤</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/11/11/2019-07-11-%E6%92%91%E8%B5%B7%E8%81%8C%E5%9C%BAbug/" class="title">2019-07-11-撑起职场bug</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-2019-07-11-想到学的" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2019-07-11-想到学的
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="article-date">
+	  <time datetime="2019-11-11T05:40:29.459Z" itemprop="datePublished">2019-11-11</time>
+	</a>
+</span>
+        
+        
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+	<span class="article-read hidden-xs">
+    	<i class="icon icon-eye-fill" aria-hidden="true"></i>
+    	<span id="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" class="leancloud_visitors"  data-flag-title="2019-07-11-想到学的">0</span>
+    </span>
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 3.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 16(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <ol>
+<li><p>webview的优化</p>
+<blockquote>
+<p><a href="https://juejin.im/post/5d2605f8f265da1bc23fa07c?utm_source=gold_browser_extension" target="_blank" rel="noopener">https://juejin.im/post/5d2605f8f265da1bc23fa07c?utm_source=gold_browser_extension</a></p>
+</blockquote>
+</li>
+<li><p>javaweb简单的知识</p>
+</li>
+<li><p>Vue </p>
+<blockquote>
+<p>idea 添加 VUE 的语法支持和开发</p>
+<p><a href="https://blog.csdn.net/sl1990129/article/details/83794024" target="_blank" rel="noopener">https://blog.csdn.net/sl1990129/article/details/83794024</a></p>
+<p>getter 获取值</p>
+<p>Setter 比较赋值了，监视当前属性值的变化</p>
+<p>回调函数满足的三个条件：1.你定义的 2.你没有调用 3.但最终它执行了</p>
+<p>双向管理</p>
+<p>虚拟dom</p>
+<p><strong>class和style绑定</strong></p>
+<p>“ ‘a’ “ 相当于写死了  “a” 这个a是个变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 动态确定类名 --&gt;</span><br><span class="line">&lt;p :class=&quot;&#123;aClass: isA, bClass: isB&#125;&quot;&gt;</span><br><span class="line">  xxx是个对象</span><br><span class="line">&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- style来确定 --&gt;</span><br><span class="line">&lt;p :style=&quot;&#123;color: firstColor, fontSize: fontSize +&apos;px&apos;&#125;&quot;&gt;</span><br><span class="line">  style来进行绑定</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>条件渲染</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--    v-if的隐藏会移除 --&gt;</span><br><span class="line">&lt;p v-if=&quot;ok&quot;&gt; 成功了！！！&lt;/p&gt;</span><br><span class="line">&lt;p v-else&gt; 失败了！！！&lt;/p&gt;</span><br><span class="line">&lt;!--    v-show的隐藏只是应酬，标签其实还在内存里面 --&gt;</span><br><span class="line">&lt;p v-show=&quot;ok&quot;&gt;你好&lt;/p&gt;</span><br><span class="line">&lt;p v-show=&quot;!ok&quot;&gt;不好好&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;button @click=&quot;&#123;ok=!ok&#125;&quot;&gt;切换&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>v-for</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// vue只是监听本身，如果数组没有改变本身，只是里面的值改变，这个时候是不会刷新的</span><br><span class="line">//方法如果是个关键字，可能不生效，直接就报错了delete-&gt;是个关键字，所以不能行</span><br><span class="line">//</span><br><span class="line">&lt;!--    遍历数组--&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=&quot;(p, index) in persons&quot; :key=&quot;index&quot;&gt;</span><br><span class="line">            &#123;&#123;index&#125;&#125;----&#123;&#123;p.name&#125;&#125;---&#123;&#123;p.age&#125;&#125;</span><br><span class="line">            ---</span><br><span class="line">            &lt;button @click=&quot;deleteP(index)&quot;&gt;删除&lt;/button&gt;</span><br><span class="line">            ---</span><br><span class="line">            &lt;button @click=&quot;addP(index, &#123;name:&apos;xxx&apos;, age:28&#125;,)&quot;&gt;添加&lt;/button&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;!--    遍历对象--&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li v-for=&quot;(value, key) in persons[1] &quot; :key=&quot;key&quot;&gt;</span><br><span class="line">            &#123;&#123;value&#125;&#125; -- &#123;&#123;key&#125;&#125;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>列表的收缩过滤和排序</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">filterPerson() &#123;</span><br><span class="line">    <span class="comment">//取出相关的数据</span></span><br><span class="line">    <span class="keyword">const</span> &#123;persons, searchName, orderType&#125; = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> fPersons;</span><br><span class="line">    fPersons = persons.filter(<span class="function"><span class="params">p</span> =&gt;</span> p.name.indexOf(searchName) !== <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span> (orderType != <span class="number">0</span>) &#123; <span class="comment">//原本的顺序不进行排序处理</span></span><br><span class="line">        fPersons.sort(<span class="function"><span class="keyword">function</span> (<span class="params">p1, p2</span>) </span>&#123; <span class="comment">//如果返回-1 p1在前 返回正数 p2在前</span></span><br><span class="line">            <span class="keyword">if</span> (orderType == <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> p2.age - p1.age;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> p1.age - p2.age;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//对person进行过滤</span></span><br><span class="line">    <span class="keyword">return</span> fPersons;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>绑定监听</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//默认的情况下test1方法相当于  test1($event) 默认传递了event</span><br><span class="line">//如果需要自己传值的话test1(&apos;你好&apos;, $event) 最好自己传一个$event,不然就没有默认传递$event对象了</span><br><span class="line">&lt;button @click=&quot;test1&quot;&gt;test1&lt;/button&gt; </span><br><span class="line">&lt;button @click=&quot;test2(&apos;你好&apos;, $event)&quot;&gt;test2&lt;/button&gt;</span><br><span class="line"> </span><br><span class="line">		data: &#123;</span><br><span class="line">            test1() &#123;</span><br><span class="line">                alert(&quot;assdfa&quot;);</span><br><span class="line">            &#125;,</span><br><span class="line">            test2(msg, event) &#123;</span><br><span class="line">                alert(msg+&quot;---&quot; + event.target.innerHTML)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>js event 停止事件冒泡</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@click.stop=&quot;test6(&apos;inner&apos;)&quot;</span><br><span class="line"></span><br><span class="line">&lt;div @click=&quot;test4(&apos;outter&apos;)&quot; style=&quot;background: blue; width:200px; height: 200px&quot;&gt;</span><br><span class="line">        &lt;div @click.stop=&quot;test6(&apos;inner&apos;)&quot; style=&quot;background: red; width:100px; height: 100px&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>阻止事件的行为</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;http://www.baidu.com&quot; @click.prevent=&quot;test6(&apos;prevent&apos;)&quot;&gt;百度&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2&gt;按键修饰符&lt;/h2&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; @keyup.enter=&quot;test7&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>表单数据的自动收集</strong></p>
+<p>生命周期函数（钩子函数）：</p>
+<p>初始化显示</p>
+<p>更新</p>
+<p>死亡</p>
+<p>mounted 挂载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//匿名函数，函数作为参数的时候</span><br><span class="line">setInterval(() =&gt; &#123;</span><br><span class="line">    this.isShow = !this.isShow</span><br><span class="line">&#125;, 1000)</span><br></pre></td></tr></table></figure>
+
+
+<p>el去进行配置，也可以动态的配置 el</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p>   在内存中挂载好后，然后再进行页面更新</p>
+<p>   created  beforeMount mounted </p>
+<p>   beforeUpdated updated</p>
+<p>   beforeDestroy</p>
+<p>   destroy   destroy后页面还在，只是vue不管事情了，比如清除定时器</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> mounted() ajax请求，启动定时器，等异步任务</span><br><span class="line">*beforeDestroy : 做收尾工作，清除定时器</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   <a href="https://www.bootcdn.cn/" target="_blank" rel="noopener">https://www.bootcdn.cn/</a></p>
+<p>   <a href="https://momentjs.com/" target="_blank" rel="noopener">https://momentjs.com/</a></p>
+<h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> &lt;p&gt;完整版: &#123;&#123;date | dateFormat(&apos;YYYY年MM月DD日 HH:mm:ss&apos;)&#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">//定义过滤器  函数对象</span><br><span class="line">Vue.filter(&apos;dateFormat&apos;, function (value, formate) &#123;</span><br><span class="line"></span><br><span class="line">        // return moment(value).format(&quot;YYYY年MM月DD日 HH:mm:ss&quot;)</span><br><span class="line">        return moment(value).format(formate || &quot;HH:mm:ss&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">或者用在参数上这样使用</span><br><span class="line">    Vue.filter(&apos;dateFormat&apos;, function (value, formate=&quot;HH:mm:ss&quot;) &#123;</span><br><span class="line"></span><br><span class="line">            // return moment(value).format(&quot;YYYY年MM月DD日 HH:mm:ss&quot;)</span><br><span class="line">            return moment(value).format(formate)</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="常用的内置指令"><a href="#常用的内置指令" class="headerlink" title="常用的内置指令"></a>常用的内置指令</h4><h4 id="v-cloak-指令的好处"><a href="#v-cloak-指令的好处" class="headerlink" title="v-cloak 指令的好处"></a>v-cloak 指令的好处</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[v-cloak] &#123;</span><br><span class="line">    display: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> &lt;p v-cloak&gt;&#123;&#123;date&#125;&#125;&lt;/p&gt;</span><br><span class="line"> </span><br><span class="line"> 这样一开始就不会显示&#123;&#123;date&#125;&#125;了</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="vue开发插件"><a href="#vue开发插件" class="headerlink" title="vue开发插件"></a>vue开发插件</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--引入插件--&gt;</span><br><span class="line">&lt;script src=&quot;./vue-myplugin.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">    //声明使用插件</span><br><span class="line">    Vue.use(MyPlugin) //插件安装上</span><br><span class="line"></span><br><span class="line">    const vm = new Vue(&#123;</span><br><span class="line">        el: &quot;#example&quot;,</span><br><span class="line">        data: &#123;</span><br><span class="line">            msg: &apos;NBA I Love this Game&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Vue-cli安装"><a href="#Vue-cli安装" class="headerlink" title="Vue cli安装"></a>Vue cli安装</h4><p>   项目名不能用大写</p>
+<p>   vue init webpack vue_demo</p>
+<p>   Dev.env.js 开发环境</p>
+<p>   prod.env.js 生产环境</p>
+<p>   什么是组件：component：局部的功能界面，相关的资源是它的组成部分，</p>
+<p>   html，css，js 页面三要素</p>
+<p>   Jsx =&gt; js + xml </p>
+<h4 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h4><p>   npm run build</p>
+<p>   Npm intall -g serve</p>
+<p>   serve dist</p>
+<p>   然后把dist改成和 webpack_prod #ouput  加入这个 publicPath :”/demo”</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">*.js</span><br><span class="line">*.vue</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   都是组件化编码，组件开发</p>
+<h4 id="静态组件"><a href="#静态组件" class="headerlink" title="静态组件"></a>静态组件</h4><p>   1.拆分组件 2.静态组件（没有交互）3.动态组件 (初始化状态，可以操作)</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--    引入CSS样式   --&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;./static/css/bootstrap.css&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt; 标签里面要先写个div</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h4 id="组件间通信-props-定义好后，都可以this访问"><a href="#组件间通信-props-定义好后，都可以this访问" class="headerlink" title="组件间通信 props 定义好后，都可以this访问"></a>组件间通信 props 定义好后，都可以this访问</h4><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;:comment=&quot;comment&quot;  在组件标签里面写这个</span><br><span class="line">&gt;props:[&apos;comment&apos;], //这个只进行了属性名的指定</span><br><span class="line">&gt;// props: &#123;  这个是第二种实现</span><br><span class="line">&gt;//   comment :Object</span><br><span class="line">&gt;// &#125;,</span><br></pre></td></tr></table></figure>
+</blockquote>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//数据在哪个组件，更新数据的行为（方法）就应该在哪个组件</span><br><span class="line">//this.comments.unshift(comment) 放到最前面</span><br></pre></td></tr></table></figure>
+
+<p>   type:Founction</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var comment = &#123;</span><br><span class="line">  name: this.name,</span><br><span class="line">  content: this.content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   js的等于   是  === 三个等于好  !== 是也是两个</p>
+<pre><code>npm info pubsub-js</code></pre><p>   PubSub</p>
+<h4 id="组件间通信-slot"><a href="#组件间通信-slot" class="headerlink" title="组件间通信 slot"></a>组件间通信 slot</h4><p>   slot可以传标签，传什么标签就显示什么标签</p>
+<p>   一开始通过站位，先把位置占好，然后传递标签进去，不传就没有，传就显示传的</p>
+<h4 id="存储-localStorage"><a href="#存储-localStorage" class="headerlink" title="存储 localStorage"></a>存储 localStorage</h4><p>   window.localStorage.getItem() 得到的是文本，是个字符串</p>
+<p>   Json.parse(window.localStorage.getItem() || ‘[]’)</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">	arrays: &#123;</span><br><span class="line">		deep:true, //深度监视</span><br><span class="line">		handler: function(value) &#123;</span><br><span class="line">			//json数据存储在LocalStorage</span><br><span class="line">			window.localStorage.setItem(&apos;todos_key&apos;, JSON.stringify(value))</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="自定义绑定监听"><a href="#自定义绑定监听" class="headerlink" title="自定义绑定监听"></a>自定义绑定监听</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">addTodo</span><br><span class="line"></span><br><span class="line">@addTodo=&apos;addTodo&apos;</span><br><span class="line"></span><br><span class="line">//触发事件</span><br><span class="line">this.$emit(&apos;addTodo&apos;, data)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="获取组件对象"><a href="#获取组件对象" class="headerlink" title="获取组件对象"></a>获取组件对象</h4>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TodoHeader ref=&quot;header&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">this.$refs.header</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   PubSub </p>
+<p>   PubSub.subscribe(‘search’, (msg, searchName) =&gt; {</p>
+<p>   ​    const url = <code>https://api.github.com/search/users?q=${searchName}</code>;</p>
+<p>   })</p>
+<h4 id="数组的-map-方法"><a href="#数组的-map-方法" class="headerlink" title="数组的 map 方法"></a>数组的 map 方法</h4>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items.map(<span class="function"><span class="params">item</span> =&gt;</span> (&#123;</span><br><span class="line">	url: item.html_url</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="UI库学习"><a href="#UI库学习" class="headerlink" title="UI库学习"></a>UI库学习</h4><p>   饿了么：</p>
+<p>   mint UI</p>
+<p>   Elment  </p>
+<p>   这两个都是饿了么开源的库</p>
+<p>   npm install –save mint-ui</p>
+<p>   Import {Button} from ‘mint-ui’</p>
+<p>   Vue.componet(Button.name, Button)</p>
+<h4 id="路由-vue-05"><a href="#路由-vue-05" class="headerlink" title="路由(vue_05)"></a>路由(vue_05)</h4><p>   路由就是一种映射关系</p>
+<p>   处理请求的回调函数</p>
+<p>   前台路由，组件</p>
+<p>   路径和组件名</p>
+<p>   路由组件</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-link to=&quot;/xx&quot;&gt;</span><br><span class="line">当前路由组件</span><br><span class="line">&lt;router-view&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   路由组件和非路由组件</p>
+<p>   views/pages 包名</p>
+<p>   优化路由配置</p>
+<h5 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h5><p>   path最左侧的 / 是 根路径</p>
+   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  path: <span class="string">'/home'</span>,</span><br><span class="line">  component: Home,</span><br><span class="line">  children: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/message'</span>,</span><br><span class="line">      component: Message</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      path: <span class="string">'/news'</span>,</span><br><span class="line">      component: News</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   正常情况下，路由切换后，被切换的路由会死亡，下次进来的时候，会重新创建</p>
+<p>   如果要保存起来</p>
+<p>   <strong>说是缓存路由组件实际上 缓存的是 组件的对象</strong></p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive&gt;</span><br><span class="line">  &lt;router-view/&gt;</span><br><span class="line">&lt;/keep-alive&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   实时性比较高，就不能使用缓存来进行</p>
+<p>   :id 进行占位</p>
+<p>   query 是？后面的参数</p>
+<p>   params，就是路径上的 变参数</p>
+<p>   <strong>&#39; ‘ 空串和 undefined 没什么区别，都不会在界面显示</strong></p>
+<p>   进行查找 方法返回东西，返回值</p>
+<p>   this.$route.params.id * 1 如果是文本的情况下</p>
+<p>   allMessageDetails.find(detail =&gt; detail.id === this.$route.params.id)</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123; //监听路由路径发生改版，就是param 发送变化</span><br><span class="line">	$route: function(value) &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>   问题：打包的过程</p>
+<p>   界面适配</p>
+<p>   :id 这种是变量，就是js变量，就会去获取js变量，进行传值了</p>
+<p>   msg=”aaa” 直接写就是，把msg作为变量传递过去</p>
+<h4 id="跳转页面"><a href="#跳转页面" class="headerlink" title="跳转页面"></a>跳转页面</h4><p>   window.location = url，可以进行跳转</p>
+<p>   路由如何实现的， hash，通过改变hash值来进行的，浏览器可以监视这个路由变化，所以我们可以拿到这个变化，可以得到路径进行，匹配显示就可以了。</p>
+<p>   getState setState</p>
+<p>   push</p>
+<p>   replace</p>
+<h4 id="基本实现原理"><a href="#基本实现原理" class="headerlink" title="基本实现原理"></a>基本实现原理</h4><p>   <a href="https://github.com/DMQ/mvvm" target="_blank" rel="noopener">https://github.com/DMQ/mvvm</a></p>
+<p>   函数中的this只有在执行的时候被确定。this是一直变化的</p>
+<p>   节点：document  element  attr  text</p>
+<h5 id="数据代理"><a href="#数据代理" class="headerlink" title="数据代理"></a>数据代理</h5><p>   通过对象代理对另一个对象中属性的操作</p>
+<p>   //数据代理</p>
+<p>   Object.definProperty()</p>
+<p>   ![image-20190715175528462](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190715175528462.png)</p>
+<h5 id="模板解析"><a href="#模板解析" class="headerlink" title="模板解析"></a>模板解析</h5><p>   模板，html嵌套js代码。(指令属性，表达式)</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//引入js的时候需要先引入，然后再使用</span><br><span class="line">&lt;script src=&quot;../js/compile.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   js的可以通过 updater[‘aaa’] 可以去方法名 也可以去对象</p>
+<p>   this.$vm = vm 就变成了内部的对象了</p>
+<p>   Updater &amp;&amp; updaterFn()</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h5>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//回调函数什么时候调用</span><br><span class="line">//回调函数做了些什么事情</span><br><span class="line">//回调函数的this是谁</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   Dep</p>
+<p>   初始化的给data的属性进行数据劫持时创建</p>
+<p>   个数？与data中的属性一一对应关系</p>
+<p>   dep的结构？</p>
+<p>   ​    id：标识</p>
+<p>   ​    subs：[]  n个相关的watcher的容器</p>
+<p>   Watcher</p>
+<p>   ​    它的实例什么时候创建？</p>
+<p>   ​            初始化的解析 大括号表达式/一般指令时创建</p>
+<p>   ​    个数？ </p>
+<p>   ​            与模板中的表达式(不包含事件指令[事件指令在methods里面调用了，不用进行数据绑定])    </p>
+<p>   ​            </p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">this.cb = cb; //用于更新界面的回调</span><br><span class="line">this.vm = vm; // vm</span><br><span class="line">this.expOrFn = expOrFn; //对应的表达式</span><br><span class="line">this.depIds = &#123;&#125;; //相关的n个dep的容器对象</span><br><span class="line">this.value = this.get(); //当前表达式对应的value (改的时候加判断)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>   Dep和watcher的关系  ( 1对多，多对多，多对一)</p>
+<p>   什么关系？</p>
+<p>   ​    多对多的关系</p>
+<p>   ​    data属性—》 Dep —》 n个watcher    {{name}} / v-text=”name” 多写几次就是多个watcher了</p>
+<p>   属性在模板中多次被使用</p>
+<p>   ​    表达式—》 watcher —》 n个Dep()</p>
+<p>   ​    一个表达式永远是对应一个watcher    a.b 的时候，就2个dep了</p>
+<p>   多层表达式，就多个Dep()了</p>
+<p>   多个表达式使用了此属性。</p>
+<p>   n个Dep(多层表达式：a.b.c)</p>
+<p>   如何建立的？</p>
+<p>   dep和watcher创建的先后。 dep先 watcher在后面</p>
+<p>   data中属性的get()中建立</p>
+<p>   什么时候建立？</p>
+<p>   ​    初始化的解析模块中的表达式创建watcher对象时</p>
+<p>   取属性值的时候，get方法会被调用</p>
+<p>   双向绑定，就是双向赋值，dep持有watcher ，watcher持有dep</p>
+<p>   一个表达式对应一个watcher</p>
+<p>   同一个属性对应同一个Dep</p>
+<p>   初始化的时候建立了关系</p>
+<p>   vm.name = ‘abc’ —&gt; data中的name属性变化  —》 name中的set()调用</p>
+<p>   —》 dep.notify()   —&gt; wather. update()</p>
+<p>   并不是观察的对象本身，观察的是对象中的属性。</p>
+<p>   observer进行数据劫持</p>
+<h5 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h5><p>   dom事件监听</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//计算的</span><br><span class="line">computed: &#123;</span><br><span class="line">  eventOrAdd () &#123;</span><br><span class="line">    if (this.count % 2 === 0) &#123;</span><br><span class="line">      return &apos;偶数&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      return &apos;奇数&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="vuex的库"><a href="#vuex的库" class="headerlink" title="vuex的库"></a>vuex的库</h4><p>   vuex是vue的一个插件</p>
+<p>   vue应用中多个组件的共享状态进行集中式管理(读/写)</p>
+<p>   state -&gt;data    驱动应用的数据源</p>
+<p>   view -&gt; 界面  声明的方式将state映射到视图</p>
+<p>   ​    初始化显示</p>
+<p>   ​    更新显示</p>
+<p>   actions是行为，就是更新状态的函数</p>
+<p>   ​     包含n个更新数据状态的方法</p>
+<p>   单向数据流</p>
+<p>   ![image-20190716163430568](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190716163430568.png)</p>
+<p>   多组件共享状态问题</p>
+<ol>
+<li>多个视图依赖于同一状态</li>
+<li>来自不同视图的行为需要变更同一个状态</li>
+<li>原来的解决<ol>
+<li>将数据操作行为定义在父组件</li>
+<li>将数据以及操作数据传递到各个组件</li>
+</ol>
+</li>
+<li>vuex就是这样产生的</li>
+</ol>
+<h4 id="Vue相关介绍"><a href="#Vue相关介绍" class="headerlink" title="Vue相关介绍"></a>Vue相关介绍</h4><p>   组件调action</p>
+<p>   Actions</p>
+<p>   Mutations</p>
+<p>   Const state = {}</p>
+<p>   <strong>计算属性的一部分 get</strong></p>
+<p>   vue.x</p>
+<p>   depatch(actionName, data)  触发 action</p>
+<h4 id="vuex应用"><a href="#vuex应用" class="headerlink" title="vuex应用"></a>vuex应用</h4><pre><code>npm install --save vuex</code></pre><p>   主键里面如何得到一个对象</p>
+<p>   计算属性，对应的是getters</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">this. 表示组件对象</span><br><span class="line">this.$store</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="vuex结构图-管理多组件的状态"><a href="#vuex结构图-管理多组件的状态" class="headerlink" title="vuex结构图(管理多组件的状态)"></a>vuex结构图(管理多组件的状态)</h4><p>   actions 里面可以进行 ajaix请求</p>
+<p>   vuex是个全局</p>
+<p>   每个组件都能看到 $store</p>
+<p>   dispatch</p>
+<p>   更新状态就是 dispatch</p>
+<h4 id="render"><a href="#render" class="headerlink" title="render"></a>render</h4><p>   render: h =&gt; h(App)  </p>
+<p>   · =&gt; · 同时是个函数，还是return </p>
+<p>   render: function(createElement) {</p>
+<p>   ​    return createElement(App)</p>
+<p>   }</p>
+<h4 id="项目1"><a href="#项目1" class="headerlink" title="项目1"></a>项目1</h4><ol>
+<li><p>监听回车 @keyup.enter=”addTodo”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line">@keyup=<span class="string">"toClick"</span></span><br><span class="line"></span><br><span class="line">toClick (event) &#123; <span class="comment">//keycode =13的时候是回车</span></span><br><span class="line">        <span class="built_in">console</span>.log(event.keyCode)</span><br><span class="line">        alert(event.keyCode)</span><br><span class="line">      &#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"> @keyup.enter=<span class="string">"addTodo"</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>props: [‘todos’] 是跟data()同级的</p>
+</li>
+<li><p>//取出相关的数据<br>  const {persons, searchName, orderType} = this;</p>
+</li>
+<li><p>v-model 去绑定checkbox就可以了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"checkbox"</span> v-model=<span class="string">"todo.complete"</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>放入到 computed 里面的方法，每次都会被调用， methods是事件处理的</p>
+</li>
+<li><p>不能在子的 vue组件中 进行 父类的 对象改变  </p>
+<p>​    就是 props 传过来的对象</p>
+<p>![image-20190717113739958](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190717113739958.png)</p>
+</li>
+<li><p>mapState</p>
+</li>
+<li><p>vuex 注意事项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> ...mapState([&apos;todos&apos;])  //是个括号包起来的</span><br><span class="line"></span><br><span class="line">state : &#123;</span><br><span class="line">	todos: []</span><br><span class="line">&#125;</span><br><span class="line">dispatch -&gt;  </span><br><span class="line">actions : &#123;</span><br><span class="line">	deleteItem(&#123;commit, state&#125;, data) &#123;</span><br><span class="line">		commit(&apos;mutations里面的方法名&apos;, &#123;data&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">-&gt;</span><br><span class="line">mutations : &#123;</span><br><span class="line">	mutations里面的方法名(state, &#123;data&#125;) &#123;</span><br><span class="line">		//操作state，然后进行数据操作，最后更新到了界面上</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vuex<strong>只要更新状态就要进行 dispatch</strong></p>
+</li>
+<li><p>状态非常多的时候用modules来进行 状态控制 项目量非常大的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  ...mapActions([&apos;deleteSelectItem&apos;])</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>![image-20190719102456735](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190719102456735.png)</p>
+</li>
+</ol>
+<ol start="11">
+<li><p>逆向思维</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const arr = []</span><br><span class="line">let minArr = []</span><br><span class="line">categorys.forEach(c =&gt; &#123;</span><br><span class="line">	if(minArr.lenth === 8) &#123;</span><br><span class="line">		minArr = []</span><br><span class="line">	&#125;</span><br><span class="line">	if(minArr.length === 0) &#123;</span><br><span class="line">		arr.push(minArr)</span><br><span class="line">	&#125;</span><br><span class="line">	minArr.push(c)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123; //watch里面可以直接写对应的方法</span><br><span class="line">	categroys(value) &#123;</span><br><span class="line">		new Swiper(&apos;.swiper-container&apos;, &#123;</span><br><span class="line">			loop: true,</span><br><span class="line">			pagination: &#123;</span><br><span class="line">				el:&apos;.swiper-pagination&apos;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">		</span><br><span class="line">		//怎么才能已经把数据加载完了，然后进行相应的设置</span><br><span class="line">	  //界面更新后立马创建Swiper对象</span><br><span class="line">      this.$nextTick(()=&gt; &#123;</span><br><span class="line">        //一旦界面更新。理解调用</span><br><span class="line">        //下一次dom完成后调用</span><br><span class="line">        //这条语句要放在数据更新之后调用</span><br><span class="line">        </span><br><span class="line">      &#125;)</span><br><span class="line">      </span><br><span class="line">    //项目遇到什么问题</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>item in 6, 提高用户体验</p>
+</li>
+</ol>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">props: &#123;</span><br><span class="line">	score: Number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>   {} 对象属性</p>
+<p>   计算属性，最难的时候，不知道什么时候使用计算属性</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">:class=&quot;&apos;star-&apos;+size&quot;</span><br><span class="line"></span><br><span class="line">5个span</span><br><span class="line"></span><br><span class="line">&lt;span class=&quot;start-item&quot; v-for=&quot;(sc, index) in startClasses&quot; :class=&quot;sc&quot;/&gt;</span><br><span class="line"></span><br><span class="line">类名常量</span><br><span class="line">const CLASS_ON = &quot;on&quot;</span><br><span class="line"></span><br><span class="line">小数部分大于等于0.5出现half</span><br><span class="line"></span><br><span class="line">const scoreInteger = Math.floor(score)</span><br><span class="line">if(score*10 - scoreInteger*10 &gt;=5) &#123; 小数点不精确，所以 *10</span><br><span class="line">	scs.push(CLASS_HALF)  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">while(scs.length&lt;5) &#123;</span><br><span class="line">	scs.push(CLASS_SAFT)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<blockquote>
+<p>js对象 {} 在html中都直接这样就好了</p>
+</blockquote>
+<p>观察者设计模式</p>
+<p>![image-20190716215758766](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190716215758766.png)</p>
+<p>![image-20190716222831469](/Users/zhousaito/Library/Application Support/typora-user-images/image-20190716222831469.png)</p>
+<h4 id="定一个小项目"><a href="#定一个小项目" class="headerlink" title="定一个小项目"></a>定一个小项目</h4><p>读书（类似fm吗），小视</p>
+<p>前端：android、小程序、ios/flutter</p>
+<p>后端：java后台进行实现 </p>
+<pre><code>&gt; 资源储备：
+&gt;
+&gt;         1. 如何建立表结构，如何设计 (X)
+&gt;           2. 后台使用SpringBoot(√)
+&gt;
+&gt; </code></pre>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhousaito.top/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/" title="2019-07-11-想到学的" target="_blank" rel="external">http://zhousaito.top/2019/11/11/2019-07-11-%E6%83%B3%E5%88%B0%E5%AD%A6%E7%9A%84/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ZhouSilverBullet" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/zhousaito_avatar.jpeg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ZhouSilverBullet" target="_blank"><span class="text-dark">Zhou Saito</span><small class="ml-1x">Android Developer &amp; Designer</small></a></h3>
+        <div>Android开发工程师,半音阶口琴爱好者</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/11/11/2019-11-11-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9Agithub/" title="自己的域名绑定github博客"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/11/11/2019-07-24-app%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4/" title="2019-07-24-app开发步骤"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.jpg" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ZhouSilverBullet" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: 'eAwNlazQVQmktftMCTdJmVCz-gzGzoHsz',
+    appKey: 'FnKPRRnm2aCIEXJdHsh7lQMx',
+    placeholder: 'ヾﾉ≧∀≦)o 来呀！吐槽一番吧！',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: true
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
